@@ -7,11 +7,13 @@ struct Health {
     int max_health;
 };
 
+
 struct Potion {
     int x, y;
     int health_restore;
     bool collected;
 };
+
 
 struct Coin {
     int x, y;
@@ -26,14 +28,16 @@ struct Inventory {
     int current_element;
 };
 
+
 struct Monsters {
     int x, y;
     bool is_alive;
-    const char* monster_type;   // монстры подразделяются по видам сложности 
-    int m_damage = 2;  // урон наносимый монстром
+    const char* type;   // монстры подразделяются по видам сложности 
+    int damage;  // урон наносимый монстром
     Health health;
     bool is_alive;
 };
+
 
 struct Player {
     int x, y;
@@ -43,4 +47,5 @@ struct Player {
     Inventory inventory;
     Potion* potions;
     bool is_alive;
+    int coins;
 };
