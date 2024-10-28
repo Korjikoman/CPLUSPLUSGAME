@@ -3,51 +3,52 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "Classes.cpp"
+
 int main()
 {
     std::cout << "Hello World!\n";
 }
 
 
-struct Health {
-    int current_health;
-    int max_health; 
-};
 
-struct Potion {
-    int x, y;
-    int health_restore;
-    bool collected;
-};
+void init_player(Player* player, int x, int y, int health, int speed, int damage) {
+    // координаты
+    player->x = x;
+    player->y = y;
+    // здоровье
+    player->health.max_health = health;
+    //рюкзак
+    player->inventory.space = 4;
+    player->inventory.items_count = 0;
+    player->inventory.current_element = 0;
+    // скорость перевижения и урон врагам 
+    player->speed = speed;
+    player->damage = damage;
+    // возрождение
+    player->is_alive = true;
+}
 
-struct Coin {
-    int x, y;
-    bool collected; 
-};
+// перемещение игрока
+void move_player(Player* player, int dx, int dy) {
+    player->x += dx * player->speed;
+    player->y += dy * player->speed;
+}
 
-struct Inventory {
-    int space;  // сколько влезет в рюкзак
-    int items_count;  // сколько уже там вещей
-    int current_element;
-};
+// лечим игрока
+void heal_player(Player* player, int heal) {
+    if (player->health.current_health < player->health.max_health) {
+        player->health.current_health += heal;
+    }
+    else printf("Player has maximum health points");
+}
 
-struct Monsters {
-    int x, y;
-    bool is_alive;
-    const char* monster_type;   // монстры подразделяются по видам сложности 
-    int m_damage = 2;  // урон наносимый монстром
-    Health health;
-    bool is_alive;
-};
+// колечим игрока
+void damage_player(Player* player, int damage) {
+    player->health.current_health -= damage;
+    if (player->health.current_health <= 0) {
+        printf("Player is dead");
+        player->is_alive = false;
+    }
 
-struct Player {
-    int x, y; 
-    const char* name = "Bob";
-    Health health;
-    int p_damage = 1; // урон наносимый монстрам 
-    bool has_backpack = false; // есть ли у игрока рюкзак
-    Inventory inventory;
-    Potion* potions;
-    bool is_alive;
-};
-
+}
