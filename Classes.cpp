@@ -21,16 +21,18 @@ struct Coin {
 
 
 struct Inventory {
-    int space;  // сколько влезет в рюкзак
-    int items_count;  // сколько уже там вещей
+    int space;  // 
+    int items_count;  
     int current_element;
+    int current_space;
+    char** inventory_items;
 };
 
 struct Monsters {
     int x, y;
     bool is_alive;
-    const char* monster_type;   // монстры подраздел€ютс€ по видам сложности 
-    int m_damage = 2;  // урон наносимый монстром
+    const char* monster_type; 
+    int damage = 2;  
     Health health;
     bool is_alive;
 };
@@ -39,8 +41,14 @@ struct Player {
     int x, y;
     Health health;
     int speed;
-    int damage; // урон наносимый монстрам 
+    int damage;
     Inventory inventory;
     Potion* potions;
     bool is_alive;
+    int coins;
+};
+
+struct Menu {
+    int selected_option;
+    int highest_score;
 };
