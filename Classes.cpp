@@ -23,9 +23,11 @@ struct Coin {
 
 
 struct Inventory {
-    int space;  // сколько влезет в рюкзак
-    int items_count;  // сколько уже там вещей
+    int space;  // 
+    int items_count;  
     int current_element;
+    int current_space;
+    char** inventory_items;
 };
 
 
@@ -43,9 +45,14 @@ struct Player {
     int x, y;
     Health health;
     int speed;
-    int damage; // урон наносимый монстрам 
+    int damage;
     Inventory inventory;
     Potion* potions;
     bool is_alive;
     int coins;
+};
+
+struct Menu {
+    int selected_option;
+    int highest_score;
 };

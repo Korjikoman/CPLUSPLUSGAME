@@ -2,8 +2,10 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdbool.h>
-
+#include <string.h>
 #include "Classes.cpp"
+
+int MAX_STRING_LENGTH = 30;
 
 int main()
 {
@@ -11,8 +13,7 @@ int main()
 }
 
 
-// --------------------- PLAYER ----------------
- 
+// ------------- Player -----------------
 void init_player(Player* player, int x, int y, int health, int speed, int damage) {
     // координаты
     player->x = x;
@@ -29,7 +30,7 @@ void init_player(Player* player, int x, int y, int health, int speed, int damage
     player->damage = damage;
     // возрождение
     player->is_alive = true;
-    // сколько собрал монеток
+    // монетки  
     player->coins = 0;
 }
 
@@ -58,8 +59,24 @@ void heal_player(Player* player, int heal) {
 // колечим игрока
 void damage_player(Player* player, int damage) {
     player->health.current_health -= damage;
-    if (player->health.current_health <= 0) {
+    if (player_is_dead(player)) {
         printf("Player is dead");
+    }
+
+}
+
+
+
+// передвижение игрока
+void move_player(Player *player, int dx, int dy) {
+    player->x += dx * player->speed;
+    player->y += dy * player->speed;
+}
+
+// проверям, умер ли игрокg
+bool player_is_dead(Player *player){
+    if(player->health.current_health <= 0 ){
+        player->health.current_health = 0;
         player->is_alive = false;
     }
 
@@ -138,11 +155,20 @@ void manster_attack(Monsters* monster, Player* player) {
         }
     }
 }
+}
 
-void damage_monster(Monsters* monster, int damage) {
-    monster->health.current_health -= damage;
+void damage_monster(Monsters *monster, int amount) {
+    monster->health.current_health -= amount;
     if (monster->health.current_health <= 0) {
-        printf("Monster is dead");
+        monster->health.current_health = 0;
         monster->is_alive = false;
+        printf("Monster defeated!\n");
     }
 }
+
+// ------------------- Menu ------------------------
+void menu_init(Menu *menu){
+    menu->selected_option = 0;
+    menu->highest_score = 0;
+}
+
