@@ -236,11 +236,12 @@ int inventory_add_item(Inventory *inventory, Item *item)
     }
 
     // Добавление предмета в массив строк
-    inventory->inventory_items[inventory->items_count] = _strdup(item->item_name);
+    inventory->inventory_items[inventory->items_count] = strdup(item->item_name);
     inventory->items_count++;
     inventory->current_space--; // Уменьшаем свободное место
     item->collected = 1;        // Помечаем предмет как собранный
     printf("Item '%s' added to inventory.\n", item->item_name);
+    return 0;
 }
 
 // ------------Monsters ------------------------
