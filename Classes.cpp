@@ -2,57 +2,59 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-struct Health {
+struct Health
+{
     int current_health;
     int max_health;
 };
 
-
-struct Potion {
+struct Potion
+{
     int x, y;
     int health_restore;
     bool collected;
 };
 
-
-struct Coin {
+struct Coin
+{
     int x, y;
     int value;
     bool collected;
 };
 
-
-struct Inventory {
-    int space;  // 
-    int items_count;  
+struct Inventory
+{
+    int space; //
+    int items_count;
     int current_element;
     int current_space;
-    char** inventory_items;
+    char **inventory_items;
 };
 
-
-struct Monsters {
+struct Monsters
+{
     int x, y;
-    bool is_alive;
-    const char* type;   // монстры подразделяются по видам сложности 
-    int damage;  // урон наносимый монстром
+    int damage; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     Health health;
     bool is_alive;
 };
 
-
-struct Player {
+struct Player
+{
     int x, y;
     Health health;
     int speed;
     int damage;
     Inventory inventory;
-    Potion* potions;
+    Potion *potions;
     bool is_alive;
     int coins;
 };
 
-struct Menu {
-    int selected_option;
-    int highest_score;
+struct Item
+{
+    const char *item_name;
+    int x, y;
+    int collected;
+    int damage;
 };
