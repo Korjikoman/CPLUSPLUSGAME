@@ -257,7 +257,7 @@ void print_monster(const Monsters *monster)
 {
     printf("Monster Position: (%d, %d)\n", monster->x, monster->y);
     printf("Damage: %d\n", monster->damage);
-    printf("Health: %d\n", monster->health);
+    printf("Health: %d\n", monster->health.current_health);
     printf("Is Alive: %s\n", monster->is_alive ? "Yes" : "No");
 }
 
