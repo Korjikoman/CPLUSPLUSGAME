@@ -2,10 +2,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-struct Health // структура для представления здоровья игрока
+class Health // структура для представления здоровья игрока
 {
+private:
     int current_health;
     int max_health;
+public:
+    int getCurrentHealth() const { return current_health; }
+    int getMaxHealth() const { return max_health; }
 };
 
 struct Potion // структура для представления зелий восстановления

@@ -9,8 +9,8 @@ void init_player(Player* player, int x, int y, int health, int speed, int damage
     player->x = x;
     player->y = y;
     // здоровье
-    player->health.max_health = health;
-    player->health.current_health = health;
+    player->health.getMaxHealth() = health;
+    player->health.getCurrentHealth() = health;
     // рюкзак
     player->inventory.space = inventory_space;
     player->inventory.items_count = 0;
@@ -28,7 +28,7 @@ void init_player(Player* player, int x, int y, int health, int speed, int damage
 void print_player(const Player* player)
 {
     printf("Player Position: (%d, %d)\n", player->x, player->y);
-    printf("Health: %d/%d\n", player->health.current_health, player->health.max_health);
+    printf("Health: %d/%d\n", player->health.getCurrentHealth(), player->health.getMaxHealth());
     printf("Speed: %d\n", player->speed);
     printf("Player inventory space: %d, items count: %d\n", player->inventory.space, player->inventory.items_count);
 }
@@ -44,10 +44,10 @@ void move_player(Player* player, int x, int y)
 // лечим игрока
 void heal_player(Player* player, int heal)
 {
-    if (player->health.current_health < player->health.max_health)
+    if (player->health.getCurrentHealth() < player->health.getMaxHealth())
     {
-        player->health.current_health += heal;
-        printf("Player's health: %d\n", player->health.current_health);
+        player->health.getCurrentHealth() += heal;
+        printf("Player's health: %d\n", player->health.getCurrentHealth());
     }
     else
         printf("Player has maximum health points\n");
@@ -56,9 +56,9 @@ void heal_player(Player* player, int heal)
 // проверям, умер ли игрок
 bool player_is_dead(Player* player)
 {
-    if (player->health.current_health <= 0)
+    if (player->health.getCurrentHealth() <= 0)
     {
-        player->health.current_health = 0;
+        player->health.getCurrentHealth() = 0;
         player->is_alive = false;
         return true;
     }
@@ -68,7 +68,7 @@ bool player_is_dead(Player* player)
 // колечим игрока
 void damage_player(Player* player, int damage)
 {
-    player->health.current_health -= damage;
+    player->health.getCurrentHealth() -= damage;
     if (player_is_dead(player))
     {
         printf("Player is dead\n");
@@ -161,7 +161,7 @@ void init_monster(Monsters* monster, int x, int y, int damage, int health)
     monster->x = x;
     monster->y = y;
     monster->damage = damage;
-    monster->health.current_health = health;
+    monster->health.getCurrentHealth() = health;
     monster->is_alive = true;
 }
 
@@ -169,25 +169,25 @@ void print_monster(const Monsters* monster)
 {
     printf("Monster Position: (%d, %d)\n", monster->x, monster->y);
     printf("Damage: %d\n", monster->damage);
-    printf("Health: %d\n", monster->health.current_health);
+    printf("Health: %d\n", monster->health.getCurrentHealth());
     printf("Is Alive: %s\n", monster->is_alive ? "Yes" : "No");
 }
 
 void monster_attack(Player* player, Monsters* monster)
 {
-    if (monster->is_alive && player->health.current_health > 0)
+    if (monster->is_alive && player->health.getCurrentHealth() > 0)
     {
         damage_player(player, monster->damage);
-        printf("Monster attacked! Player health: %d/%d\n", player->health.current_health, player->health.max_health);
+        printf("Monster attacked! Player health: %d/%d\n", player->health.getCurrentHealth(), player->health.getMaxHealth());
     }
 }
 
 void damage_monster(Monsters* monster, int amount)
 {
-    monster->health.current_health -= amount;
-    if (monster->health.current_health <= 0)
+    monster->health.getCurrentHealth() -= amount;
+    if (monster->health.getCurrentHealth() <= 0)
     {
-        monster->health.current_health = 0;
+        monster->health.getCurrentHealth() = 0;
         monster->is_alive = false;
         printf("Monster defeated!\n");
     }
@@ -219,10 +219,10 @@ void battle_with_monster(Player* player, Monsters* monster, Inventory* inventory
 
     // Монстр атакует первым
     damage_player(player, monster->damage);
-    printf("You are attacked by a monster! Your health: %d\n", player->health.current_health);
+    printf("You are attacked by a monster! Your health: %d\n", player->health.getCurrentHealth());
 
     // Проверка, если игрок уже мёртв
-    if (player->health.current_health <= 0) {
+    if (player->health.getCurrentHealth() <= 0) {
         printf("You were killed by the monster! Game over.\n");
         player->is_alive = false;
         return;
@@ -247,7 +247,7 @@ void battle_with_monster(Player* player, Monsters* monster, Inventory* inventory
     while (monster->is_alive && player->is_alive) {
         // Игрок атакует монстра
         damage_monster(monster, player_damage);
-        printf("You attacked the monster! Monster's health: %d\n", monster->health.current_health);
+        printf("You attacked the monster! Monster's health: %d\n", monster->health.getCurrentHealth());
 
         if (!monster->is_alive) {
             break;
@@ -255,9 +255,9 @@ void battle_with_monster(Player* player, Monsters* monster, Inventory* inventory
 
         // Монстр атакует игрока
         damage_player(player, monster->damage);
-        printf("The monster fought back! Your health: %d\n", player->health.current_health);
+        printf("The monster fought back! Your health: %d\n", player->health.getCurrentHealth());
 
-        if (player->health.current_health <= 0) {
+        if (player->health.getCurrentHealth() <= 0) {
             player->is_alive = false;
             break;
         }
@@ -283,9 +283,9 @@ void use_potion(struct Player* player, struct Potion* potion) {
     if (potion->collected || potion->health_restore <= 0) return;
 
     printf("Player found a potion! Restoring %d health.\n", potion->health_restore);
-    player->health.current_health += potion->health_restore;
-    if (player->health.current_health > player->health.max_health) {
-        player->health.current_health = player->health.max_health;
+    player->health.getCurrentHealth() += potion->health_restore;
+    if (player->health.getCurrentHealth() > player->health.getMaxHealth()) {
+        player->health.getCurrentHealth() = player->health.getMaxHealth();
     }
     potion->collected = true;
 }
