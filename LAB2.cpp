@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "Classes.h" // здесь описаны все объекты
+#include "Classes.cpp"
 
 int MAX_STRING_LENGTH = 30;
 

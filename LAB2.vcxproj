@@ -129,7 +129,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Classes.h" />
     <ClCompile Include="Classes.cpp" />
     <ClCompile Include="LAB2.cpp" />
   </ItemGroup>
