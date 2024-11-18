@@ -34,10 +34,10 @@ void print_player(const Player* player)
 }
 
 // перемещение игрока
-void move_player(Player* player, int dx, int dy)
+void move_player(Player* player, int x, int y)
 {
-    player->x += dx * player->speed;
-    player->y += dy * player->speed;
+    player->x = x * player->speed;
+    player->y = y * player->speed;
     printf("Player moved to (%d, %d)\n", player->x, player->y);
 }
 
@@ -106,6 +106,7 @@ void print_coin(const Coin* coin)
     printf("Collected: %s\n", coin->collected ? "Yes" : "No");
 }
 
+// собираем монетку
 void collect_coin(Player* player, Coin* coin)
 {
     if (!coin->collected)
@@ -128,11 +129,11 @@ void init_inventory(Inventory* inventory, int space)
 void print_inventory(Inventory* inventory)
 {
     printf("Inventory space: %d\n", inventory->space);
-    printf("Ваш инвентарь:\n");
-    if (inventory->items_count == 0) printf("Ничего нет\n");
+    printf("Your inventory:\n");
+    if (inventory->items_count == 0) printf("Ther's nothing in it\n");
     for (int i = 0; i < inventory->items_count; i++)
     {
-        printf("  Item %d: %s\n", i + 1, inventory->inventory_items[i]);
+        printf("  Item %d: %s\n", i + 1, inventory->inventory_items[i]->item_name);
     }
     printf("Inventory current element: %d\n", inventory->current_element);
 }
@@ -203,7 +204,7 @@ void init_item(Item* item, int x, int y, const char* item_name, int damage)
 
 void print_item(Item* item)
 {
-    printf("Potion Position: (%d, %d)\n", item->x, item->y);
+    printf("Item Position: (%d, %d)\n", item->x, item->y);
     printf("Item damage: %d\n", item->damage);
     printf("Is item collected: %s\n", item->collected ? "Yes" : "No");
 }
@@ -211,28 +212,73 @@ void print_item(Item* item)
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
 void battle_with_monster(Player* player, Monsters* monster, Inventory* inventory)
 {
-    damage_player(player, monster->damage);
-    printf("На вас напал монстр! Ваше здоровье: %d\n", player->health.current_health);
-    printf("Выберите оружие из инвентаря, чтобы дать ему отпор!");
-    scanf_s("%d", inventory->current_element);
-
-    printf("Вы выбрали %s", inventory->inventory_items[inventory->current_element - 1]->item_name);
-    int player_damage = inventory->inventory_items[inventory->current_element - 1]->damage;
-    while (monster->is_alive && player->is_alive) {
-        damage_monster(monster, player_damage);
-        printf("Монстру нанесен урон, его здоровье: %d", monster->health);
-        damage_player(player, monster->damage);
-        printf("Монстр дал сдачи! Ваше здоровье: %d\n", player->health.current_health);
+    if (!monster->is_alive) {
+        printf("The monster is already dead.\n");
+        return;
     }
-    if (monster->is_alive) printf("Вас убил монстр! Игра окончена");
-    else if (player->is_alive) {
-        printf("Вы убили монстра! Вы заработали 5 монет!");
+
+    // Монстр атакует первым
+    damage_player(player, monster->damage);
+    printf("You are attacked by a monster! Your health: %d\n", player->health.current_health);
+
+    // Проверка, если игрок уже мёртв
+    if (player->health.current_health <= 0) {
+        printf("You were killed by the monster! Game over.\n");
+        player->is_alive = false;
+        return;
+    }
+
+    // Игрок выбирает оружие из инвентаря
+    printf("Choose a weapon from your inventory (enter slot number 1-%d): ", inventory->items_count);
+    int choice;
+    scanf_s("%d", &choice);
+
+    // Проверка валидности выбора
+    if (choice < 1 || choice > inventory->items_count) {
+        printf("Invalid choice. You lose your chance to attack!\n");
+        return;
+    }
+
+    // Получаем урон выбранного оружия
+    int player_damage = inventory->inventory_items[choice-1]->damage;
+    printf("You've chosen a weapon with damage: %d\n", player_damage);
+
+    // Битва
+    while (monster->is_alive && player->is_alive) {
+        // Игрок атакует монстра
+        damage_monster(monster, player_damage);
+        printf("You attacked the monster! Monster's health: %d\n", monster->health.current_health);
+
+        if (!monster->is_alive) {
+            break;
+        }
+
+        // Монстр атакует игрока
+        damage_player(player, monster->damage);
+        printf("The monster fought back! Your health: %d\n", player->health.current_health);
+
+        if (player->health.current_health <= 0) {
+            player->is_alive = false;
+            break;
+        }
+    }
+
+    // Результат битвы
+    if (!monster->is_alive && player->is_alive) {
+        printf("You killed the monster! You earned 5 coins!\n");
         player->coins += 5;
     }
-    else { printf("ОШИБКА СРАЖЕНИЯ С МОНСТРОМ"); }
+    else if (!player->is_alive) {
+        printf("You were killed by the monster! Game over.\n");
+    }
+    else {
+        printf("ERROR: Unexpected condition in the battle.\n");
+    }
+    printf("\n\n");
+
 }
 
-
+// используем зелье для восстановления здоровья
 void use_potion(struct Player* player, struct Potion* potion) {
     if (potion->collected || potion->health_restore <= 0) return;
 
