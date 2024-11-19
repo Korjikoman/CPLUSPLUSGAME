@@ -48,7 +48,8 @@ Item::Item() {
     std::cout << "Item initialized successfully!\n";
 }
 
-
+int Item::getX() { return x; };
+int Item::getY() { return y; };
 std::string Item::getName() const { return item_name; }
 int Item::getDamage() { return damage; }
 bool Item::isCollected() { return collected; }
@@ -64,14 +65,22 @@ void Item::print_item() {
 
 
 
-Inventory::Inventory() : space(0), items_count(0), current_element(0) {}
-Inventory::Inventory(int inv_space) {
-        space = inv_space;
-        items_count = 0;
-        current_element = 0;
-        inventory_items = new Item[space];
+Inventory::Inventory(){
+    std::cout << "Initializing Inventory...\n";
 
+    std::cout << "Enter the inventory space: ";
+    std::cin >> space;
+
+    if (space <= 0) {
+        std::cerr << "Invalid inventory size! Setting space to 1.\n";
+        space = 1;
     }
+    inventory_items = new Item*[space];
+
+    items_count = 0;
+    current_element = 0;
+}
+
 
 Inventory::~Inventory() {
     delete[] inventory_items;
@@ -89,19 +98,19 @@ void Inventory::print_inventory()
 {
     printf("Inventory space: %d\n", space);
     printf("Your inventory:\n");
-    if (items_count == 0) printf("Ther's nothing in it\n");
+    if (items_count == 0) printf("There's nothing in it\n");
     for (int i = 0; i < items_count; i++)
     {
-        std::cout << "  Item " << i + 1 << ": " << inventory_items[i].getName() << std::endl;
+        std::cout << "  Item " << i + 1 << ": " << inventory_items[i]->getName() << std::endl;
     }
     std::cout << "Inventory current element: " << current_element << std::endl;
 }
 
-int Inventory::inventoryAddItem(Item& item)
+int Inventory::inventoryAddItem(Item* item)
 {
     if (items_count >= space)
     {
-        printf("Inventory is full! Cannot add item '%s'.\n", item.getName());
+        printf("Inventory is full! Cannot add item '%s'.\n", item->getName());
         return 0; // Не удалось добавить предмет
     }
 
@@ -109,13 +118,13 @@ int Inventory::inventoryAddItem(Item& item)
     inventory_items[items_count] = item;
     items_count++;
 
-    item.Collected();   // Помечаем предмет как собранный
-    std::cout << "Item " << item.getName() << " added to inventory.\n";
+    item->Collected();   // Помечаем предмет как собранный
+    std::cout << "Item " << item->getName() << " added to inventory.\n";
     return 0;
 }
 
 int Inventory::getItem(int idx) {
-    return inventory_items[idx].getDamage();
+    return inventory_items[idx]->getDamage();
 }
 
 
@@ -123,7 +132,7 @@ int Inventory::getItem(int idx) {
     // инициализация
 Player::Player()
     {
-        int p_health, inventory_space;
+        int p_health;
         std::cout << "Initializing player...\n";
 
         std::cout << "Enter the initial x-coordinate of the player: ";
@@ -143,9 +152,7 @@ Player::Player()
         std::cout << "Enter the damage of the player: ";
         std::cin >> damage;
 
-        std::cout << "Enter the inventory space of the player: ";
-        std::cin >> inventory_space;
-        inventory.changeSpace(inventory_space);
+        
 
         potions_count = 0; // Инициализация по умолчанию
         is_alive = true;   // Игрок жив при создании
@@ -181,6 +188,7 @@ Player::Player()
         printf("Health: %d/%d\n", health.getCurrentHealth(), health.getMaxHealth());
         printf("Speed: %d\n", speed);
         printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
+        printf("Player coins: %d\n", coins);
     } // вывод игрока
 
     int Player::getCurrentHealth() {
@@ -197,6 +205,7 @@ Player::Player()
     void Player::heal(int value) {
         health.heal(value);
     }
+    int Player::getDamage() { return damage; }
 
     void Player::is_dead() { is_alive = false; }
 
@@ -235,8 +244,8 @@ Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
     void Monsters::is_dead() { is_alive = false; }
     
     void Monsters::move_random() {
-        int dx = std::rand() % 15 + 1; // Случайное смещение по x: от -5 до 5
-        int dy = std::rand() % 15 + 1; // Случайное смещение по y: от -5 до 5
+        int dx = std::rand() % 15 + 1;
+        int dy = std::rand() % 15 + 1; 
         move(dx, dy);
     }
 
@@ -263,7 +272,15 @@ Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
         printf("Collected: %s\n", collected ? "Yes" : "No");
     }
     void Potion::move(int dx, int dy) {
-    
+        x = dx;
+        y = dy;
+    }
+
+    void Potion::move_random()
+    {
+        int dx = std::rand() % 15 + 1; // Случайное смещение по x: от -5 до 5
+        int dy = std::rand() % 15 + 1; // Случайное смещение по y: от -5 до 5
+        move(dx, dy);
     }
 
     Coin::Coin(int px, int py, int val)
@@ -341,20 +358,28 @@ void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory
         return;
     }
 
-    // Игрок выбирает оружие из инвентаря
-    std::cout << "Choose a weapon from your inventory (enter slot number 1-%d): " << inventory.getItemsCount() << std::endl;
-    int choice;
-    scanf_s("%d", &choice);
+    int player_damage = 0;
+    if (inventory.getItemsCount() > 0) {
+        // Игрок выбирает оружие из инвентаря
+        std::cout << "Choose a weapon from your inventory (enter slot number 1 " << inventory.getItemsCount() <<"-): " << std::endl;
+        int choice;
+        scanf_s("%d", &choice);
 
-    // Проверка валидности выбора
-    if (choice < 1 || choice >  inventory.getItemsCount()) {
-        std::cout << "Invalid choice. You lose your chance to attack!\n" << std::endl;
-        return;
+        // Проверка валидности выбора
+        if (choice < 1 || choice >  inventory.getItemsCount()) {
+            std::cout << "Invalid choice. You lose your chance to attack!\n" << std::endl;
+            return;
+        }
+
+        // Получаем урон выбранного оружия
+    
+            player_damage = inventory.getItem(choice - 1);
+            std::cout << "You've chosen a weapon with damage: " << player_damage << std::endl;
     }
-
-    // Получаем урон выбранного оружия
-    int player_damage = inventory.getItem(choice - 1);
-    std::cout << "You've chosen a weapon with damage: " << player_damage << std::endl;
+    else {
+        std::cout << "You don't have any items\n";
+        player_damage = player.getDamage();
+    }
 
 
     // Битва
@@ -369,7 +394,7 @@ void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory
 
         // Монстр атакует игрока
         damagePlayer(player, monster.getDamage());
-        std::cout << "The monster fought back! Your health: %d" << player.getCurrentHealth() << std::endl;
+        std::cout << "The monster fought back! Your health: " << player.getCurrentHealth() << std::endl;
 
         if (player.getCurrentHealth() <= 0) {
             player.is_dead();
@@ -409,13 +434,13 @@ void use_potion(Player& player, Potion& potion) {
 
 void checkCollisions(Player& player, Monsters* monster, int monsters_count,
     Potion* potions, int potion_count,
-    Coin& coin, Inventory& inventory) {
+    Coin& coin, Inventory& inventory, Item* items, int items_count) {
     // Проверяем столкновения с монстрами
     for (int i = 0; i < monsters_count; i++) {
         if (player.getX() == monster[i].getX() && player.getY() == monster[i].getY()) {
             std::cout << "Player encountered a monster!\n";
             battle_with_monster(player, monster[i], inventory);
-            return;
+            
         }
     }
 
@@ -424,7 +449,7 @@ void checkCollisions(Player& player, Monsters* monster, int monsters_count,
         if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
             std::cout << "Player found a potion!\n";
             player.heal(potions[i].getHealthRestore());
-            return;
+            
         }
     }
 
@@ -432,8 +457,19 @@ void checkCollisions(Player& player, Monsters* monster, int monsters_count,
     if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
         std::cout << "Player found a coin!\n";
         player.add_coins(coin.getValue()); 
-        return;
+        
     }
+
+    // Проверяем столкновения с оружием
+    for (int i = 0; i < items_count; i++) {
+        if (player.getX() == items[i].getX() && items[i].getY() == items[i].getY()) {
+            std::cout << "Player found a " << items[i].getName() << "!\n";
+            inventory.inventoryAddItem(&items[i]);
+            
+        }
+    }
+
+   
 }
 
 void showInitializedClasses(Player& player, Inventory& inventory, Monsters* monsters, 

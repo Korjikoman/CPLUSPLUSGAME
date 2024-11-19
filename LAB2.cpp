@@ -6,6 +6,8 @@ int main()
     // Инициализируем объекты класса
     Player player;
     Inventory inventory = player.getInventory();
+    
+
     int monsters_count;
     int items_count;
     int potion_count;
@@ -28,16 +30,19 @@ int main()
     Item* items = new Item[items_count];
 
     Potion* potions = new Potion[potion_count];
+    for (int i = 0; i < monsters_count; i++) {
+        potions[i].move_random();
+    }
 
     Coin coin(3, 3, 5);
 
 
-    printf("\n\n");
 
 
     // Игровой цикл
     bool game_running = true;
-    while (game_running) {
+    while (game_running && player.getCurrentHealth() > 0) {
+        std::cout << "\n\n";
         std::cout << "\n--- Game Menu ---\n";
         std::cout << "1. Move player\n";
         std::cout << "2. Show class objects\n";
@@ -52,7 +57,7 @@ int main()
             std::cout << "Enter (x,y) to move the player: ";
             std::cin >> dx >> dy;
             player.movePlayer(dx, dy);
-            checkCollisions(player, monsters, monsters_count, potions, potion_count, coin, inventory);
+            checkCollisions(player, monsters, monsters_count, potions, potion_count, coin, inventory, items, items_count);
             break;
         case 2:
             showInitializedClasses(player, inventory, monsters, 

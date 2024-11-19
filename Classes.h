@@ -37,6 +37,8 @@ public:
     // инициализация
     Item();
 
+    int getX();
+    int getY();
 
     std::string getName() const;
     int getDamage();
@@ -55,11 +57,10 @@ private:
     int space;
     int items_count;
     int current_element;
-    Item* inventory_items;
+    Item** inventory_items;
 
 public:
     Inventory();
-    Inventory(int inv_space);
 
     ~Inventory(); 
 
@@ -69,7 +70,7 @@ public:
     int getItemsCount(); 
 
     void print_inventory();
-    int inventoryAddItem(Item& item);
+    int inventoryAddItem(Item* item);
     
 
     int getItem(int idx); 
@@ -108,7 +109,7 @@ public:
     int getY(); 
     int getspeed(); 
     void printPlayer();
-   
+    int getDamage();
 
     int getCurrentHealth(); 
 
@@ -170,7 +171,7 @@ public:
     void print_potion();
  
     void move(int dx, int dy); 
-
+    void move_random();
 
 };
 
@@ -211,7 +212,7 @@ void use_potion(Player& player, Potion& potion);
 
 void checkCollisions(Player& player, Monsters* monster, int monsters_count,
     Potion* potions, int potion_count,
-    Coin& coin, Inventory& inventory);
+    Coin& coin, Inventory& inventory, Item* items, int items_count);
 
 void showInitializedClasses(Player& player, Inventory& inventory, Monsters* monsters,
     int monsters_count, Item* items, int items_count, Potion* potions,
