@@ -1,88 +1,71 @@
-#include <stdio.h>
-#include <iostream>
-#include <stdio.h>
-#include <stdbool.h>
+#include "Classes.h"
 
-class Health;
-class Player;
-class Monsters;
-class Item;
-class Coin;
-class Potion;
-class Inventory;
+Health::Health() : current_health(0), max_health(0) {}
+Health::Health(int max) {
+    current_health = max_health = max;
 
-class Health // класс дл€ представлени€ здоровь€ игрока
+}
+
+int Health::getCurrentHealth()
 {
-private:
-    int current_health;
-    int max_health;
-public:
-    Health(int current, int max) {
-        current_health = current;
-        max_health = max;
+    return current_health;
+}
+
+int Health::getMaxHealth() { return max_health; }
+void Health::changeMaxHealthValue(int value) {
+    max_health = value;
+}
+void Health::heal(int healpoints) {
+    current_health += healpoints;
+    if (current_health > max_health) {
+        current_health = max_health;
     }
-
-    int getCurrentHealth() const {
-        return current_health;
-    }
-    int getMaxHealth() const { return max_health; }
-    void heal(int healpoints) {
-        current_health += healpoints;
-        if (current_health > max_health) {
-            current_health = max_health;
-        }
-    }
-    void changeHealthValue(int new_value) {
-        current_health = new_value;
-    }
-};
+}
+void Health::changeHealthValue(int new_value) {
+    current_health = new_value;
+}
 
 
-class Item // класс дл€ представлени€ оружи€
-{
 
-private:
-    std::string item_name;
-    int x, y;
-    bool collected;
-    int damage;
+Item::Item() {
+    std::cout << "Initializing Item...\n";
 
-public:
-    // инициализаци€
-   /* Item(int it_x, int it_y, const char* it_item_name, int it_damage) {
-        x = it_x;
-        y = it_y;
-        item_name = it_item_name;
-        damage = it_damage;
-    }*/
-    Item() : x(0), y(0), item_name("Unknown"), damage(0) {}
-    Item(int it_x, int it_y, const char* it_item_name, int it_damage) : x(it_x), y(it_y), item_name(it_item_name), damage(it_damage) {}
+    std::cout << "Enter the name of the item: ";
+    std::cin.ignore(); // ќчищаем буфер
+    std::getline(std::cin, item_name);
 
-    std::string getName() const { return item_name; }
-    int getDamage() { return damage; }
-    bool isCollected() { return collected; }
-    void Collected() { collected = true; }
+    std::cout << "Enter the x-coordinate of the item: ";
+    std::cin >> x;
 
-    // вывод характеристик оружи€
-    void print_item(Item* item) {
-        printf("Item Position: (%d, %d)\n", item->x, item->y);
-        printf("Item damage: %d\n", item->damage);
-        printf("Is item collected: %s\n", item->collected ? "Yes" : "No");
-    }
+    std::cout << "Enter the y-coordinate of the item: ";
+    std::cin >> y;
 
-};
+    std::cout << "Enter the damage of the item: ";
+    std::cin >> damage;
+
+    collected = false; // ѕо умолчанию предмет не собран
+
+    std::cout << "Item initialized successfully!\n";
+}
 
 
-class Inventory // класс дл€ представлени€ инвентар€ игрока
-{
-private:
-    int space;
-    int items_count;
-    int current_element;
-    struct Item* inventory_items;
+std::string Item::getName() const { return item_name; }
+int Item::getDamage() { return damage; }
+bool Item::isCollected() { return collected; }
+void Item::Collected() { collected = true; }
 
-public:
-    Inventory(int inv_space) {
+// вывод характеристик оружи€
+void Item::print_item() {
+    printf("Item Position: (%d, %d)\n", x, y);
+    printf("Item damage: %d\n", damage);
+    printf("Is item collected: %s\n", collected ? "Yes" : "No");
+}
+
+
+
+
+Inventory::Inventory() : space(0), items_count(0), current_element(0) {}
+Inventory::Inventory(int inv_space) {
         space = inv_space;
         items_count = 0;
         current_element = 0;
@@ -90,92 +73,109 @@ public:
 
     }
 
-    ~Inventory() {
-        delete[] inventory_items;
-    }
+Inventory::~Inventory() {
+    delete[] inventory_items;
+}
 
-    int getSpace() { return space; }
-    int getCurrentElement() { return current_element; }
-    int getItemsCount() { return items_count; }
-
-
-    void print_inventory()
-    {
-        printf("Inventory space: %d\n", space);
-        printf("Your inventory:\n");
-        if (items_count == 0) printf("Ther's nothing in it\n");
-        for (int i = 0; i < items_count; i++)
-        {
-            std::cout << "  Item " << i + 1 << ": " << inventory_items[i].getName() << std::endl;
-        }
-        std::cout << "Inventory current element: " << current_element << std::endl;
-    }
-
-    int inventoryAddItem(Item& item)
-    {
-        if (items_count >= space)
-        {
-            printf("Inventory is full! Cannot add item '%s'.\n", item.getName());
-            return 0; // Ќе удалось добавить предмет
-        }
-
-        // ƒобавление предмета в массив строк
-        inventory_items[items_count] = item;
-        items_count++;
-
-        item.Collected();   // ѕомечаем предмет как собранный
-        std::cout << "Item " << item.getName() << " added to inventory.\n";
-        return 0;
-    }
-
-    int getItem(int idx) {
-        return inventory_items[idx].getDamage();
-    }
-
-};
+int Inventory::getSpace() { return space; }
+void Inventory::changeSpace(int new_space) {
+    space = new_space;
+}
+int Inventory::getCurrentElement() { return current_element; }
+int Inventory::getItemsCount() { return items_count; }
 
 
-class Player // класс дл€ представлени€ игрока
+void Inventory::print_inventory()
 {
+    printf("Inventory space: %d\n", space);
+    printf("Your inventory:\n");
+    if (items_count == 0) printf("Ther's nothing in it\n");
+    for (int i = 0; i < items_count; i++)
+    {
+        std::cout << "  Item " << i + 1 << ": " << inventory_items[i].getName() << std::endl;
+    }
+    std::cout << "Inventory current element: " << current_element << std::endl;
+}
 
-private:
-    int x, y;
-    Health health;
-    int speed;
-    int damage;
-    Inventory inventory;
-    int potions_count;
-    Potion* potions;
-    bool is_alive;
-    int coins;
+int Inventory::inventoryAddItem(Item& item)
+{
+    if (items_count >= space)
+    {
+        printf("Inventory is full! Cannot add item '%s'.\n", item.getName());
+        return 0; // Ќе удалось добавить предмет
+    }
 
-public:
+    // ƒобавление предмета в массив строк
+    inventory_items[items_count] = item;
+    items_count++;
+
+    item.Collected();   // ѕомечаем предмет как собранный
+    std::cout << "Item " << item.getName() << " added to inventory.\n";
+    return 0;
+}
+
+int Inventory::getItem(int idx) {
+    return inventory_items[idx].getDamage();
+}
+
+
+
     // инициализаци€
-    Player(int p_x, int p_y, int p_health, int p_speed, int p_dmg, int p_inventory_space) :
-        x(p_x), y(p_y), health(p_health, p_health), speed(p_speed), damage(p_dmg), inventory(p_inventory_space), potions_count(0)
-    {}
+Player::Player()
+    {
+        int p_health, inventory_space;
+        std::cout << "Initializing player...\n";
+
+        std::cout << "Enter the initial x-coordinate of the player: ";
+        std::cin >> x;
+
+        std::cout << "Enter the initial y-coordinate of the player: ";
+        std::cin >> y;
+
+        std::cout << "Enter the initial health of the player: ";
+        std::cin >> p_health;
+        health.changeHealthValue(p_health);
+        health.changeMaxHealthValue(p_health);
+
+        std::cout << "Enter the speed of the player: ";
+        std::cin >> speed;
+
+        std::cout << "Enter the damage of the player: ";
+        std::cin >> damage;
+
+        std::cout << "Enter the inventory space of the player: ";
+        std::cin >> inventory_space;
+        inventory.changeSpace(inventory_space);
+
+        potions_count = 0; // »нициализаци€ по умолчанию
+        is_alive = true;   // »грок жив при создании
+        coins = 0;         // Ќачальное количество монет
+
+        std::cout << "Player initialized successfully!\n";
+    }
 
     // перемещаем игрока
-    void movePlayer(int dx, int dy) {
-        x = x * speed;
-        y = y * speed;
+    void Player::movePlayer(int dx, int dy) {
+        x = dx * speed;
+        y = dy * speed;
         printf("Player moved to (%d, %d)\n", x, y);
     }
 
     // провер€ем, умер ли игрок
-    bool isAlive() {
+    bool Player::isAlive() {
         return is_alive;
 
     }
+    Inventory Player::getInventory() {
+        return inventory;
+    }
 
-
-
-    void add_coins(int value) { coins += value; }
-    int get_coins() { return coins; }
-    int getX() { return x; }
-    int getY() { return y; }
-    int getspeed() { return speed; }
-    void printPlayer()
+    void Player::add_coins(int value) { coins += value; }
+    int Player::get_coins() { return coins; }
+    int Player::getX() { return x; }
+    int Player::getY() { return y; }
+    int Player::getspeed() { return speed; }
+    void Player::printPlayer()
     {
         printf("Player Position: (%d, %d)\n", x, y);
         printf("Health: %d/%d\n", health.getCurrentHealth(), health.getMaxHealth());
@@ -183,74 +183,67 @@ public:
         printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
     } // вывод игрока
 
-    //void addPotion(const Potion& potion) {
-    //    potions[potions_count++] = potion; // ƒобавл€ем зелье в массив
-    //}
-    int getCurrentHealth() const {
+    int Player::getCurrentHealth() {
         return health.getCurrentHealth();
     }
 
-    int getMaxHealth() const {
+    int Player::getMaxHealth() {
         return health.getMaxHealth();
     }
-    void changeHealthValue(int new_value) {
+    void Player::changeHealthValue(int new_value) {
         health.changeHealthValue(new_value);
     }
 
-    
+    void Player::heal(int value) {
+        health.heal(value);
+    }
 
-    void is_dead() { is_alive = false; }
-
-};
+    void Player::is_dead() { is_alive = false; }
 
 
-class Monsters // класс дл€ представлени€ монстров
-{
-private:
-    int x, y;
-    int damage;
-    Health health;
-    bool is_alive;
 
-public:
+
+Monsters::Monsters() : x(0), y(0), health(10), damage(2), is_alive(true) {}
     // инициализаци€
-    Monsters(int m_x, int m_y, int m_damage, int m_health) :
-        x(m_x), y(m_y), health(m_health, m_health), damage(m_damage)
+Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
+        x(m_x), y(m_y), health(m_health), damage(m_damage), is_alive(true)
     {}
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getDamage() const { return damage; }
-    int getHealth() { return health.getCurrentHealth(); }
+    int Monsters::getX() const { return x; }
+    int Monsters::getY() const { return y; }
+    int Monsters::getDamage() const { return damage; }
+    int Monsters::getHealth() { return health.getCurrentHealth(); }
 
-    void changeHealthValue(int value) {
+    void Monsters::changeHealthValue(int value) {
         health.changeHealthValue(value);
     }
-    bool isAlive() const { return is_alive; }
+    bool Monsters::isAlive() const { return is_alive; }
     // вывод характеристик монстра
-    void printMonster() {
+    void Monsters::printMonster() {
         printf("Monster Position: (%d, %d)\n", x, y);
         printf("Damage: %d\n", damage);
         printf("Health: %d\n", health.getCurrentHealth());
         printf("Is Alive: %s\n", is_alive ? "Yes" : "No");
     }
 
-    // наносим урон игроку 
+    void Monsters::move(int dx, int dy) {
+        x = dx;
+        y = dy;
+
+    }
     
 
-    void is_dead() { is_alive = false; }
+    void Monsters::is_dead() { is_alive = false; }
+    
+    void Monsters::move_random() {
+        int dx = std::rand() % 15 + 1; // —лучайное смещение по x: от -5 до 5
+        int dy = std::rand() % 15 + 1; // —лучайное смещение по y: от -5 до 5
+        move(dx, dy);
+    }
 
 
-};
 
-
-class Potion // класс дл€ представлени€ зелий восстановлени€
-{
-private:
-    int x, y;
-    int health_restore;
-    bool collected;
-public:
-    Potion(int px, int py, int restore)
+    Potion::Potion() : x(0), y(0), health_restore(4), collected(false) {}
+    Potion::Potion(int px, int py, int restore)
     {
         x = px;
         y = py;
@@ -258,48 +251,37 @@ public:
         collected = false;
     }
 
-    bool isCollected() const { return collected; }
-    void collect() { collected = true; };
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getHealthRestore() const { return health_restore; }
-    void print_potion(const Potion* potion)
+    bool Potion::isCollected() const { return collected; }
+    void Potion::collect() { collected = true; };
+    int Potion::getX() const { return x; }
+    int Potion::getY() const { return y; }
+    int Potion::getHealthRestore() const { return health_restore; }
+    void Potion::print_potion()
     {
-        printf("Potion Position: (%d, %d)\n", potion->x, potion->y);
-        printf("Health Restore: %d\n", potion->health_restore);
-        printf("Collected: %s\n", potion->collected ? "Yes" : "No");
+        printf("Potion Position: (%d, %d)\n", x, y);
+        printf("Health Restore: %d\n", health_restore);
+        printf("Collected: %s\n", collected ? "Yes" : "No");
+    }
+    void Potion::move(int dx, int dy) {
+    
     }
 
-
-
-};
-
-
-
-// класс дл€ представлени€ монеток
-class Coin // структура дл€ представлени€ монеток
-{
-private:
-    int x, y;
-    int value;
-    bool collected;
-public:
-    Coin(int px, int py, int val)
+    Coin::Coin(int px, int py, int val)
         : x(px), y(py), value(val), collected(false) {}
     
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getValue() const{ return value; }
-    void print_coin() {
+    int Coin::getX() const { return x; }
+    int Coin::getY() const { return y; }
+    int Coin::getValue() const{ return value; }
+    void Coin::print_coin() {
         std::cout << "Coin Position: (" << getX() << ", " << getY() << ")\n";
         std::cout << "Collected: " << (is_collected() ? "Yes" : "No") << "\n";
 
     }
-    bool is_collected() {
+    bool Coin::is_collected() {
         if (collected == true) return true;
         return false;
     }
-    void collect_coin(Player& player, int value) {
+    void Coin::collect_coin(Player& player, int value) {
         if (!collected)
         {
             collected = true;
@@ -309,8 +291,6 @@ public:
     }
 
 
-
-};
 
 
 
@@ -425,6 +405,61 @@ void use_potion(Player& player, Potion& potion) {
     potion.collect();
 }
 
-int main() {
-    return 0;
+
+
+void checkCollisions(Player& player, Monsters* monster, int monsters_count,
+    Potion* potions, int potion_count,
+    Coin& coin, Inventory& inventory) {
+    // ѕровер€ем столкновени€ с монстрами
+    for (int i = 0; i < monsters_count; i++) {
+        if (player.getX() == monster[i].getX() && player.getY() == monster[i].getY()) {
+            std::cout << "Player encountered a monster!\n";
+            battle_with_monster(player, monster[i], inventory);
+            return;
+        }
+    }
+
+    // ѕровер€ем столкновени€ с зель€ми
+    for (int i = 0; i < potion_count; i++) {
+        if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
+            std::cout << "Player found a potion!\n";
+            player.heal(potions[i].getHealthRestore());
+            return;
+        }
+    }
+
+    // ѕровер€ем столкновени€ с монетой
+    if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+        std::cout << "Player found a coin!\n";
+        player.add_coins(coin.getValue()); 
+        return;
+    }
+}
+
+void showInitializedClasses(Player& player, Inventory& inventory, Monsters* monsters, 
+    int monsters_count, Item* items, int items_count, Potion* potions, 
+    int potions_count, Coin& coin) {
+    std::cout << "------------------Player:\n";
+    player.printPlayer();
+    
+    std::cout << "------------------Player's inventory:\n";
+    inventory.print_inventory();
+    
+    std::cout << "------------------Monsters:\n";
+    for (int i = 0; i < monsters_count; i++) {
+        monsters[i].printMonster();
+    }
+
+    std::cout << "------------------Items:\n";
+    for (int i = 0; i < items_count; i++) {
+        items[i].print_item();
+    }
+    std::cout << "------------------Potions:\n";
+    for (int i = 0; i < potions_count; i++) {
+        potions[i].print_potion();
+    }
+
+    std::cout << "------------------Coin:\n";
+    coin.print_coin();
+
 }

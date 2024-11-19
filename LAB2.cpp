@@ -1,118 +1,70 @@
-﻿#include <iostream>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
-#include "Classes.cpp"
-
-int MAX_STRING_LENGTH = 30;
-
-void print_player_status(Player* player) {
-    printf("Player position: (%d, %d), His health: %d/%d\n", player->x, player->y, player->health.current_health, player->health.max_health);
-}
-
-
+﻿#include "LAB2.h"
 
 int main()
 {
-    // Создаем объекты структур
+    
+    // Инициализируем объекты класса
     Player player;
+    Inventory inventory = player.getInventory();
+    int monsters_count;
+    int items_count;
+    int potion_count;
 
-    Monsters monster1;
-    Monsters monster2;
+    std::cout << "How many monsters do you want: ";
+    std::cin >> monsters_count;
 
-    Inventory inventory;
+    std::cout << "How many items do you want: ";
+    std::cin >> items_count;
 
-    Item item1;
-    Item item2;
-    Item item3;
-    Item* item4 = (struct Item*)malloc(sizeof(struct Item));
+    std::cout << "How many potions do you want: ";
+    std::cin >> potion_count;
 
-    Coin coin;
-    Potion potion;
-    Health health;
+    // Инициализировали монстров, переместили их в рандомные места
+    Monsters* monsters = new Monsters[monsters_count];
+    for (int i = 0; i < monsters_count; i++) {
+        monsters[i].move_random();
+    }
 
-    // Инициализируем объекты
-    init_player(&player, 0, 0, 10, 1, 7, 10);
-    init_inventory(&inventory, 10);
-    init_potion(&potion, 3, 3, 4);
-    init_coin(&coin, 2, 5);
-    init_monster(&monster1, 14, 7, 3, 7);
-    init_monster(&monster2, 15, 8, 2, 7);
+    Item* items = new Item[items_count];
 
-    init_item(&item1, 5, 5, "Sword", 7);
-    init_item(&item2, 6, 6, "Gun", 18);
-    init_item(&item3, 7, 7, "Bow", 3);
-    init_item(item4, 8, 8, "Shield", 2);
+    Potion* potions = new Potion[potion_count];
 
-    
+    Coin coin(3, 3, 5);
 
-    // Добавление предметов в инвентарь
-    inventory_add_item(&inventory, &item1);
-    inventory_add_item(&inventory, &item2);
-    inventory_add_item(&inventory, &item3);
-    inventory_add_item(&inventory, item4);
-    
-    
 
     printf("\n\n");
+
+
     // Игровой цикл
     bool game_running = true;
     while (game_running) {
-        printf("\n--- Game Menu ---\n");
-        printf("1. Move Player\n");
-        printf("2. Check Objects \n");
-        printf("2. Exit Game\n");
-        printf("Enter your choice: ");
-
+        std::cout << "\n--- Game Menu ---\n";
+        std::cout << "1. Move player\n";
+        std::cout << "2. Show class objects\n";
+        std::cout << "3. Exit game\n";
+        std::cout << "Enter your choice: ";
         int choice;
-        scanf_s("%d", &choice);
+        std::cin >> choice;
 
         switch (choice) {
         case 1:
-            print_player_status(&player);
-            // Ввод координат от игрока
-            int new_x, new_y;
-            printf("Enter player coordinates (x y): ");
-            scanf_s("%d %d", &new_x, &new_y);
-
-            move_player(&player, new_x, new_y);
-
-            // Проверка столкновений
-            if (player.x == monster1.x && player.y == monster1.y) {
-                battle_with_monster(&player, &monster1, &inventory);
-            }
-            else if (player.x == monster2.x && player.y == monster2.y) {
-                battle_with_monster(&player, &monster2, &inventory);
-            }
-            if (player.x == potion.x && player.y == potion.y) {
-                use_potion(&player, &potion);
-            }
-            if (player.x == -1 && player.y == -1) {
-                use_potion(&player, &potion);
-            }
+            int dx, dy;
+            std::cout << "Enter (x,y) to move the player: ";
+            std::cin >> dx >> dy;
+            player.movePlayer(dx, dy);
+            checkCollisions(player, monsters, monsters_count, potions, potion_count, coin, inventory);
             break;
         case 2:
-            // Выводим инфу об объектах
-            print_player(&player);
-            print_potion(&potion);
-            print_coin(&coin);
-            print_monster(&monster1);
-            print_monster(&monster2);
-            // Инвентарь
-            printf("\n");
-            print_inventory(&inventory);
+            showInitializedClasses(player, inventory, monsters, 
+                monsters_count, items, items_count, potions, 
+                potion_count, coin);
             break;
-        case 3: 
-            printf("Exit");
+        case 3:
             game_running = false;
+            std::cout << "Exiting the game. Goodbye!" << std::endl;
             break;
-        }
-
-       
-        // Проверка состояния игрока
-        if (player.health.current_health <= 0) {
-            printf("Player has died. Game over.\n");
+        default:
+            std::cout << "Invalid choice. Please try again." << std::endl;
             break;
         }
     }
