@@ -9,7 +9,7 @@
 class Inventory // класс для представления инвентаря игрока
 {
 private:
-    int space;
+    static int space;
     int items_count;
     int current_element;
     Item** inventory_items;
@@ -18,7 +18,7 @@ public:
     Inventory();
 
     int getSpace();
-    void changeSpace(int new_space);
+    static void changeSpace(int new_space);
     int getCurrentElement();
     int getItemsCount();
 

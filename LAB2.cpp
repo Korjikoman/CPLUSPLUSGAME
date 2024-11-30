@@ -8,39 +8,10 @@ int main()
     Player player;
     Inventory inventory = player.getInventory();
     
+    // initializing map and objects on it
+    Map map;
 
-    int monsters_count;
-    int items_count;
-    int potion_count;
-
-    std::cout << "How many monsters do you want: ";
-    std::cin >> monsters_count;
-
-    std::cout << "How many items do you want: ";
-    std::cin >> items_count;
-
-    std::cout << "How many potions do you want: ";
-    std::cin >> potion_count;
-
-    // Инициализировали монстров, переместили их в рандомные места
-    Monsters* monsters = new Monsters[monsters_count];
-    for (int i = 0; i < monsters_count; i++) {
-        monsters[i].move_random();
-    }
-
-    Item* items = new Item[items_count];
-
-    Potion* potions = new Potion[potion_count];
-    for (int i = 0; i < monsters_count; i++) {
-        potions[i].move_random();
-    }
-
-    Coin coin(3, 3, 5);
-
-
-
-
-    // Игровой цикл
+    // Game loop
     bool game_running = true;
     while (game_running && player.getCurrentHealth() > 0) {
         std::cout << "\n\n";
@@ -58,13 +29,11 @@ int main()
             std::cout << "Enter (x,y) to move the player: ";
             std::cin >> dx >> dy;
             player.movePlayer(dx, dy);
-            checkCollisions(player, monsters, monsters_count, potions, potion_count, coin, inventory, items, items_count);
+            map.checkCollisions();
             break;
         case 2:
             // Показываем классы и их характеристику
-            showInitializedClasses(player, inventory, monsters, 
-                monsters_count, items, items_count, potions, 
-                potion_count, coin);
+            map.showInitializedClasses();
             break;
         case 3:
             // Выход из игры
@@ -77,10 +46,7 @@ int main()
         }
     }
 
-    delete[] monsters;
-    delete[]potions;
-    delete[] items;
-    
+    map.deleteObjects();
     
     return 0;
 }

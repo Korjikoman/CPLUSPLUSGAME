@@ -32,4 +32,6 @@ public:
     // вывод характеристик оружия
     void print_item();
 
+    void changeX(int value);
+    void changeY(int value);
 };

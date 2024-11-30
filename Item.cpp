@@ -36,3 +36,13 @@ void Item::print_item() {
     printf("Item damage: %d\n", damage);
     printf("Is item collected: %s\n", collected ? "Yes" : "No");
 }
+
+void Item::changeX(int value)
+{
+    x = value;
+}
+
+void Item::changeY(int value)
+{
+    y = value;
+}

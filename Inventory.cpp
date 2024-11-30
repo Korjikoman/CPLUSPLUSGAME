@@ -1,16 +1,11 @@
 #include "Inventory.h"
 
+// Inventory space is a static variable
+int Inventory::space = 10;
 
 Inventory::Inventory() {
     std::cout << "Initializing Inventory...\n";
 
-    std::cout << "Enter the inventory space: ";
-    std::cin >> space;
-
-    if (space <= 0) {
-        std::cerr << "Invalid inventory size! Setting space to 1.\n";
-        space = 1;
-    }
     inventory_items = new Item * [space];
 
     items_count = 0;
@@ -19,6 +14,8 @@ Inventory::Inventory() {
 
 
 int Inventory::getSpace() { return space; }
+
+// Static method that chages inventory space
 void Inventory::changeSpace(int new_space) {
     space = new_space;
 }

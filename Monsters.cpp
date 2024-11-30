@@ -1,10 +1,10 @@
 #include "Monsters.h"
 
 
-Monsters::Monsters() : x(0), y(0), health(10), damage(2), is_alive(true) {}
+Monsters::Monsters() : x(0), y(0), health(), damage(2), is_alive(true) {}
 // инициализация
 Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
-    x(m_x), y(m_y), health(m_health), damage(m_damage), is_alive(true)
+    x(m_x), y(m_y), health(), damage(m_damage), is_alive(true)
 {}
 int Monsters::getX() const { return x; }
 int Monsters::getY() const { return y; }

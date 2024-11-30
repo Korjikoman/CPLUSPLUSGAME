@@ -21,12 +21,3 @@ void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory
 
 // используем зелье для восстановления здоровья
 void use_potion(Player& player, Potion& potion);
-
-
-void checkCollisions(Player& player, Monsters* monster, int monsters_count,
-    Potion* potions, int potion_count,
-    Coin& coin, Inventory& inventory, Item* items, int items_count);
-
-void showInitializedClasses(Player& player, Inventory& inventory, Monsters* monsters,
-    int monsters_count, Item* items, int items_count, Potion* potions,
-    int potions_count, Coin& coin);

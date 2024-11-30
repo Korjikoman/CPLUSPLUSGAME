@@ -1,21 +1,17 @@
 #include "Player.h"
 
-
 Player::Player()
 {
     int p_health;
     std::cout << "Initializing player...\n";
 
-    std::cout << "Enter the initial x-coordinate of the player: ";
-    std::cin >> x;
+    std::cout << "Coordinates of a player: (" << x << "; " << "y)\n";
 
-    std::cout << "Enter the initial y-coordinate of the player: ";
-    std::cin >> y;
 
     std::cout << "Enter the initial health of the player: ";
     std::cin >> p_health;
     health.changeHealthValue(p_health);
-    health.changeMaxHealthValue(p_health);
+
 
     std::cout << "Enter the speed of the player: ";
     std::cin >> speed;

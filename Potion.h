@@ -9,7 +9,7 @@ class Potion // класс для представления зелий восстановления
 {
 private:
     int x, y;
-    int health_restore;
+    static int health_restore;
     bool collected;
 public:
     Potion();
@@ -24,5 +24,8 @@ public:
 
     void move(int dx, int dy);
     void move_random();
+
+    void changeX(int value);
+    void changeY(int value);
 
 };

@@ -3,8 +3,7 @@
 
 
 
-Coin::Coin(int px, int py, int val)
-    : x(px), y(py), value(val), collected(false) {}
+Coin::Coin() : x(0), y(0), value(5), collected(false) {}
 
 int Coin::getX() const { return x; }
 int Coin::getY() const { return y; }
@@ -26,5 +25,15 @@ void Coin::collect_coin(Player& player, int value) {
         player.add_coins(value);
         printf("Coin collected! Total coins: %d\n", player.get_coins());
     }
+}
+
+void Coin::changeX(int value)
+{
+    x = value;
+}
+
+void Coin::changeY(int value)
+{
+    y = value;
 }
 

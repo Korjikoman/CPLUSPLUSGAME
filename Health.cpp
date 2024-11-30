@@ -1,11 +1,17 @@
 #include "Health.h"
 
 
-Health::Health() : current_health(0), max_health(0) {}
-Health::Health(int max) {
-    current_health = max_health = max;
-
+Health::Health() {
+    current_health = max_health;
 }
+
+// Static method that changes max_health
+void Health::setMaxHealth(int new_size)
+{
+    max_health = new_size;
+}
+// Initializing static variable
+int Health::max_health = 10;
 
 int Health::getCurrentHealth()
 {

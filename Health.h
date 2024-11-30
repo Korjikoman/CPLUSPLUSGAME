@@ -9,10 +9,10 @@ class Health // класс для представления здоровья игрока
 {
 private:
     int current_health;
-    int max_health;
+    static int max_health;
 public:
     Health();
-    Health(int max);
+    static void setMaxHealth(int new_size);
 
     int getCurrentHealth(); // получаем текущее здоровьу
     int getMaxHealth();

@@ -14,7 +14,7 @@ private:
     int value;
     bool collected;
 public:
-    Coin(int px, int py, int val);
+    Coin();
 
     int getX() const;
     int getY() const;
@@ -23,6 +23,7 @@ public:
     bool is_collected();
     void collect_coin(Player& player, int value);
 
-
+    void changeX(int value);
+    void changeY(int value);
 
 };

@@ -1,8 +1,8 @@
 #include "Potion.h"
 
+int Potion::health_restore = 4;
 
-
-Potion::Potion() : x(0), y(0), health_restore(4), collected(false) {}
+Potion::Potion() : x(0), y(0), collected(false) {}
 Potion::Potion(int px, int py, int restore)
 {
     x = px;
@@ -33,3 +33,10 @@ void Potion::move_random()
     int dy = std::rand() % 15 + 1;
     move(dx, dy);
 }
+
+void Potion::changeX(int value)
+{
+    x = value;
+}
+
+void Potion::changeY(int value) { y = value; }
