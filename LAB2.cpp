@@ -1,5 +1,6 @@
 ﻿#include "LAB2.h"
 
+
 int main()
 {
     
@@ -52,7 +53,7 @@ int main()
         std::cin >> choice;
 
         switch (choice) {
-        case 1:
+        case 1: // Перемещаем игрока по указанным координатам
             int dx, dy;
             std::cout << "Enter (x,y) to move the player: ";
             std::cin >> dx >> dy;
@@ -60,11 +61,13 @@ int main()
             checkCollisions(player, monsters, monsters_count, potions, potion_count, coin, inventory, items, items_count);
             break;
         case 2:
+            // Показываем классы и их характеристику
             showInitializedClasses(player, inventory, monsters, 
                 monsters_count, items, items_count, potions, 
                 potion_count, coin);
             break;
         case 3:
+            // Выход из игры
             game_running = false;
             std::cout << "Exiting the game. Goodbye!" << std::endl;
             break;
@@ -74,6 +77,10 @@ int main()
         }
     }
 
+    delete[] monsters;
+    delete[]potions;
+    delete[] items;
+    
     
     return 0;
 }

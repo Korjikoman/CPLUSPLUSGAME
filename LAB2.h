@@ -6,4 +6,11 @@
 #include <cstdlib> // Для std::rand и std::srand
 #include <ctime>   // Для инициализации генератора случайных чисел
 
-#include "Classes.h"
+#include "Coin.h"
+#include "Gameplay.h"
+#include "Health.h"
+#include "Inventory.h"
+#include "Item.h"
+#include "Monsters.h"
+#include "Player.h"
+#include "Potion.h"
