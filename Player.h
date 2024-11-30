@@ -48,5 +48,7 @@ public:
     void heal(int value);
 
     void is_dead();
-
+    void addItems(Item* item);
+    int getItemsCount();
+    int getItem(int idx);
 };

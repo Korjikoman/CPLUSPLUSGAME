@@ -9,17 +9,12 @@ Item::Item() {
     std::cin.ignore(); // Очищаем буфер
     std::getline(std::cin, item_name);
 
-    std::cout << "Enter the x-coordinate of the item: ";
-    std::cin >> x;
-
-    std::cout << "Enter the y-coordinate of the item: ";
-    std::cin >> y;
-
     std::cout << "Enter the damage of the item: ";
     std::cin >> damage;
 
     collected = false; // По умолчанию предмет не собран
-
+    x = 0;
+    y = 0;
     std::cout << "Item initialized successfully!\n";
 }
 

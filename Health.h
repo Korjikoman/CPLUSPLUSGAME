@@ -14,9 +14,8 @@ public:
     Health();
     static void setMaxHealth(int new_size);
 
-    int getCurrentHealth(); // получаем текущее здоровьу
-    int getMaxHealth();
-    void changeMaxHealthValue(int value);
+    int getCurrentHealth(); // получаем текущее здоровья
+    static int getMaxHealth();
     void heal(int healpoints); // лечим объект
     void changeHealthValue(int new_value); // изменяем значение текущего здоровья
 };

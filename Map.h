@@ -20,7 +20,7 @@ private:
 	Potion* potions;
 	Player player;
 	Item* items;
-
+	Inventory inventory;
 	int monsters_count;
 	int monster_index;
 	
@@ -30,14 +30,14 @@ private:
 	int potions_count;
 	int potion_index;
 
-	int coins_count;
+	static int coins_count;
 	int coin_index;
 
 
 public:
 	Map();
+	~Map();
 	// adding objects to map 
-	void addPlayer(Player player);
 
 	/* 
 	void addMonster(Monsters monster);
@@ -57,5 +57,11 @@ public:
 
 	// deleting objects
 	void deleteObjects();
+
+	Player getPlayer() {
+		return player;
+	}
+
+	void movePlayer(int dx, int dy);
 
 };

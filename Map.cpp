@@ -3,6 +3,7 @@
 
 int Map::width = 50;
 int Map::height = 50;
+int Map::coins_count = 7;
 
 Map::Map() {
     std::cout << "How many monsters do you want: ";
@@ -14,22 +15,15 @@ Map::Map() {
     std::cout << "How many potions do you want: ";
     std::cin >> potions_count;
 
-
     // Initializing objects, add it to the map
-	Monsters* monsters = new Monsters[monsters_count];
-    Item* items = new Item[items_count];
-    Potion* potions = new Potion[potions_count];
-    Coin* coins = new Coin[coins_count];
+	monsters = new Monsters[monsters_count];
+    items = new Item[items_count];
+    potions = new Potion[potions_count];
+    coins = new Coin[coins_count];
     moveObjectsRandomly(monsters, items, potions, coins);
 
-	addPlayer(player);
     std::cout << "Map initialized successfully, objects added\n";
 }
-
-void Map::addPlayer(Player player) {
-	player.movePlayer(0, 0);
-}
-
 
 
 //void Map::addMonster(Monsters monster) {
@@ -72,10 +66,6 @@ void Map::addPlayer(Player player) {
 //}
 
 void Map::moveObjectsRandomly(Monsters* monsters, Item* items, Potion* potions, Coin* coins) {
-	static int coord[2];
-	for (int i = 0; i < 2; i++) {
-		coord[i] = rand() % 50;
-	}
 
 	for (int i = 0; i < monsters_count; i++) {
 		monsters[i].changeX(rand() % 50);
@@ -98,16 +88,19 @@ void Map::moveObjectsRandomly(Monsters* monsters, Item* items, Potion* potions, 
 	}
 }
 
-void Map::deleteObjects()
-{
 
+Map::~Map()
+{
     delete[] monsters;
-    delete[]potions;
-    delete[] items;
+    delete[] items;    delete[] potions;
+    delete[] coins;
     player.movePlayer(-1, -1);
 
 }
 
+void Map::movePlayer(int dx, int dy) {
+    player.movePlayer(dx, dy);
+}
 
 void Map::showInitializedClasses() {
     std::cout << "------------------Player:\n";
@@ -131,7 +124,7 @@ void Map::showInitializedClasses() {
     }
 
     std::cout << "------------------Coins:\n";
-    for (int i = 0; i < potions_count; i++) {
+    for (int i = 0; i < coins_count; i++) {
         coins[i].print_coin();
     }
 }
@@ -146,7 +139,7 @@ void Map::checkCollisions() {
         if (player.getX() == monsters[i].getX() && player.getY() == monsters[i].getY()) {
             std::cout << "Player encountered a monster!\n";
 
-            battle_with_monster(player, monsters[i],inventory);
+            battle_with_monster(player, monsters[i]);
 
         }
     }
@@ -171,10 +164,10 @@ void Map::checkCollisions() {
 
     // Проверяем столкновения с оружием
     for (int i = 0; i < items_count; i++) {
-        if (player.getX() == items[i].getX() && items[i].getY() == items[i].getY()) {
+        if (player.getX() == items[i].getX() && player.getY() == items[i].getY()) {
             std::cout << "Player found a " << items[i].getName() << "!\n";
 
-            inventory.inventoryAddItem(&items[i]);
+            player.addItems(&items[i]);
 
         }
     }

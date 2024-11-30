@@ -17,7 +17,7 @@ private:
 public:
     Inventory();
 
-    int getSpace();
+    static int getSpace();
     static void changeSpace(int new_space);
     int getCurrentElement();
     int getItemsCount();

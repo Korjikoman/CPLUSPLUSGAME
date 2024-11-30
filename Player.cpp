@@ -5,7 +5,7 @@ Player::Player()
     int p_health;
     std::cout << "Initializing player...\n";
 
-    std::cout << "Coordinates of a player: (" << x << "; " << "y)\n";
+    std::cout << "Coordinates of a player: (" << x << "; " << y <<")\n";
 
 
     std::cout << "Enter the initial health of the player: ";
@@ -78,3 +78,17 @@ void Player::heal(int value) {
 int Player::getDamage() { return damage; }
 
 void Player::is_dead() { is_alive = false; }
+
+
+void Player::addItems(Item* item)
+{
+    inventory.inventoryAddItem(item);
+}
+
+int Player::getItemsCount() {
+   return  inventory.getItemsCount();
+}
+
+int Player::getItem(int idx) {
+    return inventory.getItem(idx);
+}

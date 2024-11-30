@@ -1,15 +1,14 @@
-﻿#include "LAB2.h"
+﻿#include "Main.h"
 
 
 int main()
 {
     
     // Инициализируем объекты класса
-    Player player;
-    Inventory inventory = player.getInventory();
     
     // initializing map and objects on it
     Map map;
+    Player player = map.getPlayer();
 
     // Game loop
     bool game_running = true;
@@ -18,7 +17,8 @@ int main()
         std::cout << "\n--- Game Menu ---\n";
         std::cout << "1. Move player\n";
         std::cout << "2. Show class objects\n";
-        std::cout << "3. Exit game\n";
+        std::cout << "3. Change settings\n";
+        std::cout << "4. Exit game\n";
         std::cout << "Enter your choice: ";
         int choice;
         std::cin >> choice;
@@ -28,7 +28,8 @@ int main()
             int dx, dy;
             std::cout << "Enter (x,y) to move the player: ";
             std::cin >> dx >> dy;
-            player.movePlayer(dx, dy);
+            map.movePlayer(dx, dy);
+            
             map.checkCollisions();
             break;
         case 2:
@@ -36,6 +37,9 @@ int main()
             map.showInitializedClasses();
             break;
         case 3:
+            changeSettings();
+            break;
+        case 4:
             // Выход из игры
             game_running = false;
             std::cout << "Exiting the game. Goodbye!" << std::endl;
@@ -46,7 +50,7 @@ int main()
         }
     }
 
-    map.deleteObjects();
+
     
     return 0;
 }

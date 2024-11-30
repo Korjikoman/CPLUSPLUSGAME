@@ -17,7 +17,9 @@ void damagePlayer(Player& player, int damage);
 void damageMonster(Monsters& monster, int damage);
 
 
-void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory);
+void battle_with_monster(Player& player, Monsters& monster);
 
 // используем зелье для восстановления здоровья
 void use_potion(Player& player, Potion& potion);
+
+void changeSettings();

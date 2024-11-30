@@ -29,7 +29,7 @@ void damageMonster(Monsters& monster, int damage) {
 }
 
 // Функция, реализующая механику борьбы с монстром
-void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory)
+void battle_with_monster(Player& player, Monsters& monster)
 {
     if (!monster.isAlive()) {
         printf("The monster is already dead.\n");
@@ -49,21 +49,21 @@ void battle_with_monster(Player& player, Monsters& monster, Inventory& inventory
     }
 
     int player_damage = 0;
-    if (inventory.getItemsCount() > 0) {
+    if (player.getItemsCount() > 0) {
         // Игрок выбирает оружие из инвентаря
-        std::cout << "Choose a weapon from your inventory (enter slot number 1 " << inventory.getItemsCount() << "-): " << std::endl;
+        std::cout << "Choose a weapon from your inventory (enter slot number 1 " << player.getItemsCount() << "-): " << std::endl;
         int choice;
         scanf_s("%d", &choice);
 
         // Проверка валидности выбора
-        if (choice < 1 || choice >  inventory.getItemsCount()) {
+        if (choice < 1 || choice >  player.getItemsCount()) {
             std::cout << "Invalid choice. You lose your chance to attack!\n" << std::endl;
             return;
         }
 
         // Получаем урон выбранного оружия
 
-        player_damage = inventory.getItem(choice - 1);
+        player_damage = player.getItem(choice - 1);
         std::cout << "You've chosen a weapon with damage: " << player_damage << std::endl;
     }
     else {
@@ -121,3 +121,43 @@ void use_potion(Player& player, Potion& potion) {
     }
     potion.collect();
 }
+
+void changeSettings()
+{
+    int choice;
+    std::cout << "GAME SETTINGS\n";
+    std::cout << "Select which setting you would like to change:\n";
+    std::cout << "1) Player's maximum health\n";
+    std::cout << "2) Maximum inventory space\n";
+    std::cout << "3) Amount of health restored by potions";
+    std::cin >> choice;
+    switch (choice)
+    {
+    case 1:
+        int health;
+        std::cout << "Enter new health value:";
+        std::cin >> health;
+        Health::setMaxHealth(health);
+        std::cout << "The player's new max health value is: " << Health::getMaxHealth() << "\n";
+        break;
+    
+    case 2:
+        int space;
+        std::cout << "Enter new max inventory space: ";
+        std::cin >> space;
+        Inventory::changeSpace(space);
+        std::cout << "The new max inventory space value is: " << Inventory::getSpace() << "\n";
+        break;
+    case 3:
+        int restore;
+        std::cout << "Enter new restored health value:";
+        std::cin >> restore;
+        Potion::setHealthRestore(restore);
+        std::cout << "The new value of the player's maximum health:" << Potion::getHealthRestore() << "\n";
+        break;
+
+    default:
+        break;
+    }
+}
+

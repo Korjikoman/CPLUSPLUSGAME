@@ -9,7 +9,7 @@ int Coin::getX() const { return x; }
 int Coin::getY() const { return y; }
 int Coin::getValue() const { return value; }
 void Coin::print_coin() {
-    std::cout << "Coin Position: (" << getX() << ", " << getY() << ")\n";
+    std::cout << "Coin Position: (" << x << ", " << y << ")\n";
     std::cout << "Collected: " << (is_collected() ? "Yes" : "No") << "\n";
 
 }

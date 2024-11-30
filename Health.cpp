@@ -19,9 +19,7 @@ int Health::getCurrentHealth()
 }
 
 int Health::getMaxHealth() { return max_health; }
-void Health::changeMaxHealthValue(int value) {
-    max_health = value;
-}
+
 void Health::heal(int healpoints) {
     current_health += healpoints;
     if (current_health > max_health) {

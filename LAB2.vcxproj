@@ -135,7 +135,7 @@
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="LAB2.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monsters.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="Health.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="LAB2.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monsters.h" />
     <ClInclude Include="Player.h" />

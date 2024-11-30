@@ -13,13 +13,13 @@ private:
     bool collected;
 public:
     Potion();
-    Potion(int px, int py, int restore);
 
     bool isCollected() const;
     void collect();
     int getX() const;
     int getY() const;
-    int getHealthRestore() const;
+    static int getHealthRestore();
+    static void setHealthRestore(int value);
     void print_potion();
 
     void move(int dx, int dy);

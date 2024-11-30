@@ -3,19 +3,16 @@
 int Potion::health_restore = 4;
 
 Potion::Potion() : x(0), y(0), collected(false) {}
-Potion::Potion(int px, int py, int restore)
-{
-    x = px;
-    y = py;
-    health_restore = restore;
-    collected = false;
-}
 
 bool Potion::isCollected() const { return collected; }
 void Potion::collect() { collected = true; };
 int Potion::getX() const { return x; }
 int Potion::getY() const { return y; }
-int Potion::getHealthRestore() const { return health_restore; }
+int Potion::getHealthRestore() { return health_restore; }
+void Potion::setHealthRestore(int value)
+{
+    health_restore = value;
+}
 void Potion::print_potion()
 {
     printf("Potion Position: (%d, %d)\n", x, y);
