@@ -53,10 +53,8 @@ public:
 	void checkCollisions();
 
 	// random coordinates
-	void moveObjectsRandomly(Monsters* monsters, Item* items, Potion* potions, Coin* coins);
+	void moveObjectsRandomly();
 
-	// deleting objects
-	void deleteObjects();
 
 	Player getPlayer() {
 		return player;

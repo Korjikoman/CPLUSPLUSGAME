@@ -49,9 +49,3 @@ void Monsters::changeY(int value)
 
 void Monsters::is_dead() { is_alive = false; }
 
-// Генерируем случайные координаты монстра
-void Monsters::move_random() {
-    int dx = std::rand() % 15 + 1;
-    int dy = std::rand() % 15 + 1;
-    move(dx, dy);
-}

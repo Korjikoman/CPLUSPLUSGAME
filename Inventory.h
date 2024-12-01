@@ -26,6 +26,6 @@ public:
     int inventoryAddItem(Item* item);
 
 
-    int getItem(int idx);
+    Item** getInventoryItems();
 
 };

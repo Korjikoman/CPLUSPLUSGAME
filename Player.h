@@ -50,5 +50,5 @@ public:
     void is_dead();
     void addItems(Item* item);
     int getItemsCount();
-    int getItem(int idx);
+    Item* getItem(const std::string& itemName);
 };

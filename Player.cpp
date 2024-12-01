@@ -89,6 +89,12 @@ int Player::getItemsCount() {
    return  inventory.getItemsCount();
 }
 
-int Player::getItem(int idx) {
-    return inventory.getItem(idx);
+Item* Player::getItem(const std::string& itemName) {
+    Item** items = inventory.getInventoryItems();
+    for (int i = 0; i < inventory.getItemsCount(); ++i) {
+        std::cout << "Item " << i + 1 << ": " << items[i]->getName() << ", Damage: " << items[i]->getDamage() << std::endl;
+        if (items[i]->getName() == itemName) return items[i];
+    }
+ 
+    return nullptr;
 }

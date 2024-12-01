@@ -20,7 +20,7 @@ Map::Map() {
     items = new Item[items_count];
     potions = new Potion[potions_count];
     coins = new Coin[coins_count];
-    moveObjectsRandomly(monsters, items, potions, coins);
+    moveObjectsRandomly();
 
     std::cout << "Map initialized successfully, objects added\n";
 }
@@ -65,7 +65,7 @@ Map::Map() {
 //	}
 //}
 
-void Map::moveObjectsRandomly(Monsters* monsters, Item* items, Potion* potions, Coin* coins) {
+void Map::moveObjectsRandomly() {
 
 	for (int i = 0; i < monsters_count; i++) {
 		monsters[i].changeX(rand() % 50);

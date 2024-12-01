@@ -53,6 +53,10 @@ int Inventory::inventoryAddItem(Item* item)
     return 0;
 }
 
-int Inventory::getItem(int idx) {
-    return inventory_items[idx]->getDamage();
+Item** Inventory::getInventoryItems()
+{
+   
+    return inventory_items;
+    
 }
+
