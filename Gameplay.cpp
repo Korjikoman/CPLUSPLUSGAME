@@ -10,9 +10,9 @@ void damagePlayer(Player& player, int damage) {
         return;
     }
 
-    player.changeHealthValue(player.getCurrentHealth() - damage);
-    if (player.getCurrentHealth() <= 0) {
-        player.is_dead();
+    player.health -= damage;
+    if (player.health <= 0) {
+        player.is_alive = false;
         printf("Player is dead\n");
     }
 }
@@ -113,15 +113,11 @@ void battle_with_monster(Player& player, Monsters& monster)
 
 // используем зелье для восстановления здоровья
 void use_potion(Player& player, Potion& potion) {
-    if (potion.isCollected() || potion.getHealthRestore() <= 0) return;
+    /*if (potion.isCollected() || potion.getHealthRestore() <= 0) return;
 
     std::cout << "Player found a potion! Restoring " << potion.getHealthRestore() << " health." << std::endl;
-
-    player.changeHealthValue(player.getCurrentHealth() + potion.getHealthRestore());
-    if (player.getCurrentHealth() > player.getMaxHealth()) {
-        player.changeHealthValue(player.getMaxHealth());
-    }
-    potion.collect();
+    player.health += potion.getHealthRestore();
+    potion.collect();*/
 }
 
 void changeSettings()
@@ -139,8 +135,8 @@ void changeSettings()
         int health;
         std::cout << "Enter new health value:";
         std::cin >> health;
-        Health::setMaxHealth(health);
-        std::cout << "The player's new max health value is: " << Health::getMaxHealth() << "\n";
+        Player::setMaxHealth(health);
+        std::cout << "The player's new max health value is: " << Player::getMaxHealth() << "\n";
         break;
     
     case 2:

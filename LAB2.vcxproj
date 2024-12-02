@@ -132,7 +132,6 @@
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Gameplay.cpp" />
-    <ClCompile Include="Health.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -144,7 +143,6 @@
   <ItemGroup>
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Gameplay.h" />
-    <ClInclude Include="Health.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Main.h" />

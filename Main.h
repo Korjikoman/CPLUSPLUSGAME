@@ -8,7 +8,6 @@
 
 #include "Coin.h"
 #include "Gameplay.h"
-#include "Health.h"
 #include "Inventory.h"
 #include "Item.h"
 #include "Monsters.h"

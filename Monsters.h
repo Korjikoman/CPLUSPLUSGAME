@@ -1,5 +1,4 @@
 #pragma once
-#include "Health.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdbool.h>
@@ -12,7 +11,7 @@ class Monsters // класс для представления монстров
 private:
     int x, y;
     int damage;
-    Health health;
+    int health;
     bool is_alive;
 
 public:
@@ -33,6 +32,4 @@ public:
     void changeX(int value);
     void changeY(int value);
     void is_dead();
-
-    void move_random();
 };

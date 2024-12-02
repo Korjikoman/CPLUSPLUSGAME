@@ -17,17 +17,17 @@ Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
 int Monsters::getX() const { return x; }
 int Monsters::getY() const { return y; }
 int Monsters::getDamage() const { return damage; }
-int Monsters::getHealth() { return health.getCurrentHealth(); }
+int Monsters::getHealth() { return health; }
 
 void Monsters::changeHealthValue(int value) {
-    health.changeHealthValue(value);
+    health = value;
 }
 bool Monsters::isAlive() const { return is_alive; }
 // вывод характеристик монстра
 void Monsters::printMonster() {
     printf("Monster Position: (%d, %d)\n", x, y);
     printf("Damage: %d\n", damage);
-    printf("Health: %d\n", health.getCurrentHealth());
+    printf("Health: %d\n", health);
     printf("Is Alive: %s\n", is_alive ? "Yes" : "No");
 }
 

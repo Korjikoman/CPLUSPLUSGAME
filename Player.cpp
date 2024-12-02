@@ -1,16 +1,16 @@
 #include "Player.h"
 
+int Player::maxHealth = 10;
+
 Player::Player()
 {
-    int p_health;
     std::cout << "Initializing player...\n";
 
     std::cout << "Coordinates of a player: (" << x << "; " << y <<")\n";
 
 
     std::cout << "Enter the initial health of the player: ";
-    std::cin >> p_health;
-    health.changeHealthValue(p_health);
+    std::cin >> health;
 
 
     std::cout << "Enter the speed of the player: ";
@@ -29,10 +29,15 @@ Player::Player()
 }
 
 // перемещаем игрока
-void Player::movePlayer(int dx, int dy) {
-    x = dx * speed;
-    y = dy * speed;
-    printf("Player moved to (%d, %d)\n", x, y);
+Player& Player::movePlayer(int x, int y) {
+    this->x += x;
+    this->y += y;
+    printf("Player moved to (%d, %d)\n", this->x, this->y);
+    return *this;
+}
+
+void Player::printCoordinates() {
+    std::cout << "Player is at (" << x << ", " << y << ")\n";
 }
 
 // проверяем, умер ли игрок
@@ -47,33 +52,30 @@ Inventory Player::getInventory() {
 
 void Player::add_coins(int value) { coins += value; }
 int Player::get_coins() { return coins; }
-int Player::getX() { return x; }
-int Player::getY() { return y; }
+int& Player::getX() { return x; }
+int& Player::getY() { return y; }
 int Player::getspeed() { return speed; }
 // выводим основные характеристики игрока
 void Player::printPlayer()
 {
     printf("Player Position: (%d, %d)\n", x, y);
-    printf("Health: %d/%d\n", health.getCurrentHealth(), health.getMaxHealth());
+    printf("Health: %d/%d\n", health, Player::maxHealth);
     printf("Speed: %d\n", speed);
     printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
     printf("Player coins: %d\n", coins);
 } // вывод игрока
 
 int Player::getCurrentHealth() {
-    return health.getCurrentHealth();
+    return health;
 }
 
-int Player::getMaxHealth() {
-    return health.getMaxHealth();
-}
 // Меняем значение текущего здоровья игрока (например, при битве с монстром он теряет здоровье)
 void Player::changeHealthValue(int new_value) {
-    health.changeHealthValue(new_value);
+    health = new_value;
 }
 
 void Player::heal(int value) {
-    health.heal(value);
+    health += value;
 }
 int Player::getDamage() { return damage; }
 
@@ -97,4 +99,14 @@ Item* Player::getItem(const std::string& itemName) {
     }
  
     return nullptr;
+}
+
+
+void Player::setMaxHealth(int value) {
+    Player::maxHealth = value;
+}
+
+
+int Player::getMaxHealth() {
+    return maxHealth;
 }

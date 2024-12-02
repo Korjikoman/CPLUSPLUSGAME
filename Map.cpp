@@ -99,7 +99,8 @@ Map::~Map()
 }
 
 void Map::movePlayer(int dx, int dy) {
-    player.movePlayer(dx, dy);
+    if (player.getspeed() == 2) player.movePlayer(dx, dy).movePlayer(dx, dy);
+    else player.movePlayer(dx, dy);
 }
 
 void Map::showInitializedClasses() {
@@ -174,3 +175,4 @@ void Map::checkCollisions() {
 
 
 }
+
