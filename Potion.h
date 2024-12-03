@@ -32,5 +32,12 @@ public:
     void changeX(int value);
     void changeY(int value);
 
+    // Перегрузка оператора + для объединения двух зелий
+    friend const Potion operator+(const Potion& potion1, const Potion& potion2);
+
+    Potion& operator++();
+
+    // Перегрузка постфиксного оператора ++
+    Potion operator++(int);
 
 };

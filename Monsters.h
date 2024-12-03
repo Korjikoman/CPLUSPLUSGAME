@@ -8,6 +8,7 @@
 
 class Monsters // класс для представления монстров
 {
+    friend void damageMonster(Monsters& monster, int damage);
 private:
     int x, y;
     int damage;

@@ -37,3 +37,27 @@ void Potion::changeX(int value)
 }
 
 void Potion::changeY(int value) { y = value; }
+
+
+// Перегрузка оператора + для объединения двух зелий
+const Potion operator+(const Potion& potion1, const Potion& potion2) {
+    Potion newPotion;
+
+    newPotion.health_restore = potion1.health_restore + potion2.health_restore;
+
+    // Возвращаем новый объект Potion
+    return newPotion;
+}
+
+Potion& Potion::operator++() {
+    ++x;
+    ++y;
+    return *this; 
+}
+
+Potion Potion::operator++(int) {
+    Potion temp = *this;
+    ++x;
+    ++y;
+    return temp;
+}

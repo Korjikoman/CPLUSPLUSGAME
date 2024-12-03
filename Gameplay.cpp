@@ -5,7 +5,7 @@
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
 void damagePlayer(Player& player, int damage) {
 
-    if (!player.isAlive()) {
+    if (!player.is_alive) {
         printf("Monster is dead and cannot attack.\n");
         return;
     }
@@ -19,11 +19,11 @@ void damagePlayer(Player& player, int damage) {
 
 
 void damageMonster(Monsters& monster, int damage) {
-    monster.changeHealthValue(monster.getHealth() - damage);
-    if (monster.getHealth() <= 0)
+    monster.health -= damage;
+    if (monster.health <= 0)
     {
-        monster.changeHealthValue(0);
-        monster.is_dead();
+        monster.health = 0;
+        monster.is_alive = false;
         std::cout << "Monster defeated!\n";
     }
 }
