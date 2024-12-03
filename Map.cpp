@@ -25,7 +25,15 @@ Map::Map() {
     std::cout << "Map initialized successfully, objects added\n";
 }
 
+//void Map::addPlayer(Player& newPlayer)
+//{
+//    players.push_back(newPlayer); // Добавляем нового игрока в массив
+//    std::cout << "Player " << newPlayer.getName() << " added to the map." << std::endl;
+//}
 
+Player Map::getPlayer() {
+    return player;
+}
 //void Map::addMonster(Monsters monster) {
 //	if (monster_index < monsters_count) {
 //		monsters[monster_index + 1] = monster;

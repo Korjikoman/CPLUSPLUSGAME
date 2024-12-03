@@ -5,7 +5,7 @@
 #include "Player.h"
 #include <iostream>
 #include<cstdlib>
-
+#include <vector>
 
 class Map
 {
@@ -18,12 +18,13 @@ private:
 	Coin* coins;
 	Monsters* monsters;
 	Potion* potions;
+
 	Player player;
+	
 	Item* items;
 	Inventory inventory;
 	int monsters_count;
 	int monster_index;
-	
 	int items_count;
 	int item_index;
 
@@ -56,10 +57,9 @@ public:
 	void moveObjectsRandomly();
 
 
-	Player getPlayer() {
-		return player;
-	}
+	Player getPlayer();
 
 	void movePlayer(int dx, int dy);
-
+	void addPlayer(Player& newPlayer);
+	
 };

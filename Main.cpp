@@ -10,6 +10,7 @@ int main()
     Map map;
     Player player = map.getPlayer();
 
+
     // Game loop
     bool game_running = true;
     while (game_running && player.getCurrentHealth() > 0) {
@@ -44,6 +45,7 @@ int main()
             game_running = false;
             std::cout << "Exiting the game. Goodbye!" << std::endl;
             break;
+     
         default:
             std::cout << "Invalid choice. Please try again." << std::endl;
             break;

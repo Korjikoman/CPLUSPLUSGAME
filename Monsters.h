@@ -5,6 +5,7 @@
 #include <string.h>
 #include <cstdlib> // ƒл€ std::rand и std::srand
 #include <ctime> 
+#include <vector>
 
 class Monsters // класс дл€ представлени€ монстров
 {
@@ -15,10 +16,13 @@ private:
     int health;
     bool is_alive;
 
+    std::string name;
+
+
+    static std::vector<std::string> names;
+
 public:
     Monsters();
-    // инициализаци€
-    Monsters(int m_x, int m_y, int m_damage, int m_health);
     int getX() const;
     int getY() const;
     int getDamage() const;
