@@ -5,6 +5,8 @@ int Player::maxHealth = 10;
 Player::Player()
 {
     std::cout << "Initializing player...\n";
+    std::cout << "Player's name: \n";
+    std::cin >> name;
 
     std::cout << "Coordinates of a player: (" << x << "; " << y <<")\n";
 
@@ -25,7 +27,7 @@ Player::Player()
     is_alive = true;   // Игрок жив при создании
     coins = 0;         // Начальное количество монет
 
-    std::cout << "Player initialized successfully!\n";
+    std::cout << "Player " << name << " initialized successfully!\n";
 }
 
 // перемещаем игрока
@@ -109,4 +111,8 @@ void Player::setMaxHealth(int value) {
 
 int Player::getMaxHealth() {
     return maxHealth;
+}
+
+std::string Player::getName() {
+    return name;
 }

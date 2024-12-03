@@ -16,7 +16,7 @@ class Player // класс для представления игрока
 private:
 
     int x, y;
-    
+    std::string name;
     int health;
     static int maxHealth;
     
@@ -32,7 +32,8 @@ private:
 public:
     // инициализация
     Player();
-
+    std::string getName();
+    
     // перемещаем игрока
     Player& movePlayer(int dx, int dy);
 
