@@ -1,19 +1,19 @@
 #include "Map.h"
-#include "Gameplay.h"
+
 
 int Map::width = 50;
 int Map::height = 50;
 int Map::coins_count = 7;
 
 Map::Map() {
-    std::cout << "How many monsters do you want: ";
-    std::cin >> monsters_count;
+    std::cout << "How many monsters do you want";
+    monsters_count = safeInt(1, 10);
 
-    std::cout << "How many items do you want: ";
-    std::cin >> items_count;
+    std::cout << "How many items do you want";
+    items_count = safeInt(1, 10);
 
-    std::cout << "How many potions do you want: ";
-    std::cin >> potions_count;
+    std::cout << "How many potions do you want";
+    potions_count = safeInt(1, 10);
 
     // Initializing objects, add it to the map
 	monsters = new Monsters[monsters_count];

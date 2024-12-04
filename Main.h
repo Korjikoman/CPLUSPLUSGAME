@@ -14,3 +14,4 @@
 #include "Player.h"
 #include "Potion.h"
 #include "Map.h"
+#include "Exceptions.h"

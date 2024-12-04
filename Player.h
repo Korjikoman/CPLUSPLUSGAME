@@ -1,6 +1,8 @@
 #pragma once
 #include "Inventory.h"
 #include "Potion.h"
+#include "Exceptions.h"
+
 #include <iostream>
 #include <stdio.h>
 #include <stdbool.h>

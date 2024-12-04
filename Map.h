@@ -3,9 +3,14 @@
 #include "Monsters.h"
 #include "Potion.h"
 #include "Player.h"
+#include "Gameplay.h"
+#include "Exceptions.h"
+
+
 #include <iostream>
 #include<cstdlib>
 #include <vector>
+
 
 class Map
 {

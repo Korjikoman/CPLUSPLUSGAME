@@ -10,6 +10,9 @@
 #include "Monsters.h"
 #include "Potion.h"
 #include "Coin.h"
+#include "Exceptions.h"
+
+
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
 
 void damagePlayer(Player& player, int damage);
