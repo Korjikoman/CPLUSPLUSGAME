@@ -12,20 +12,22 @@ private:
     static int space;
     int items_count;
     int current_element;
-    Item** inventory_items;
+    Item*** inventory_items;
+    int cols;
+    int rows;
 
 public:
     Inventory();
-
     static int getSpace();
     static void changeSpace(int new_space);
     int getCurrentElement();
     int getItemsCount();
 
     void print_inventory();
-    int inventoryAddItem(Item* item);
+    void inventoryAddItem(Item* item);
 
 
-    Item** getInventoryItems();
-
+    Item*** getInventoryItems();
+    int getRow(); 
+    int getCol(); 
 };

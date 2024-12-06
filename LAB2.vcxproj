@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />

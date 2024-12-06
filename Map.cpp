@@ -1,19 +1,19 @@
 #include "Map.h"
-#include "Gameplay.h"
+
 
 int Map::width = 50;
 int Map::height = 50;
 int Map::coins_count = 7;
 
 Map::Map() {
-    std::cout << "How many monsters do you want: ";
-    std::cin >> monsters_count;
+    std::cout << "How many monsters do you want";
+    monsters_count = safeInt(1, 10);
 
-    std::cout << "How many items do you want: ";
-    std::cin >> items_count;
+    std::cout << "How many items do you want";
+    items_count = safeInt(1, 10);
 
-    std::cout << "How many potions do you want: ";
-    std::cin >> potions_count;
+    std::cout << "How many potions do you want";
+    potions_count = safeInt(1, 10);
 
     // Initializing objects, add it to the map
 	monsters = new Monsters[monsters_count];
@@ -25,7 +25,15 @@ Map::Map() {
     std::cout << "Map initialized successfully, objects added\n";
 }
 
+//void Map::addPlayer(Player& newPlayer)
+//{
+//    players.push_back(newPlayer); // Добавляем нового игрока в массив
+//    std::cout << "Player " << newPlayer.getName() << " added to the map." << std::endl;
+//}
 
+Player Map::getPlayer() {
+    return player;
+}
 //void Map::addMonster(Monsters monster) {
 //	if (monster_index < monsters_count) {
 //		monsters[monster_index + 1] = monster;
@@ -132,7 +140,6 @@ void Map::showInitializedClasses() {
 
 
 void Map::checkCollisions() {
-    Inventory inventory = player.getInventory();
 
 
     // Проверяем столкновения с монстрами
@@ -169,7 +176,7 @@ void Map::checkCollisions() {
             std::cout << "Player found a " << items[i].getName() << "!\n";
 
             player.addItems(&items[i]);
-
+            
         }
     }
 

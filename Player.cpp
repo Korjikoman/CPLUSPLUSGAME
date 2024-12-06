@@ -5,19 +5,21 @@ int Player::maxHealth = 10;
 Player::Player()
 {
     std::cout << "Initializing player...\n";
+    std::cout << "Player's name (<= 100 characters): \n";
+    name = safeString(100);
 
     std::cout << "Coordinates of a player: (" << x << "; " << y <<")\n";
 
 
-    std::cout << "Enter the initial health of the player: ";
-    std::cin >> health;
+    std::cout << "Enter the initial health of the player ";
+    health = safeInt(1,10);
 
 
-    std::cout << "Enter the speed of the player: ";
-    std::cin >> speed;
+    std::cout << "Enter the speed of the player ";
+    speed= safeInt(1, 10);
 
-    std::cout << "Enter the damage of the player: ";
-    std::cin >> damage;
+    std::cout << "Enter the damage of the player ";
+    damage = safeInt(1, 2);
 
 
 
@@ -25,7 +27,7 @@ Player::Player()
     is_alive = true;   // Игрок жив при создании
     coins = 0;         // Начальное количество монет
 
-    std::cout << "Player initialized successfully!\n";
+    std::cout << "Player " << name << " initialized successfully!\n";
 }
 
 // перемещаем игрока
@@ -92,10 +94,13 @@ int Player::getItemsCount() {
 }
 
 Item* Player::getItem(const std::string& itemName) {
-    Item** items = inventory.getInventoryItems();
-    for (int i = 0; i < inventory.getItemsCount(); ++i) {
-        std::cout << "Item " << i + 1 << ": " << items[i]->getName() << ", Damage: " << items[i]->getDamage() << std::endl;
-        if (items[i]->getName() == itemName) return items[i];
+    Item*** items = inventory.getInventoryItems();
+    for (int i = 0; i < Inventory::getSpace(); i++) {
+        for (int j = 0; j < Inventory::getSpace(); j++) {
+            std::cout << "Item [" << i + 1 << ";" << j+1 << "]" << items[i][j]->getName() << ", Damage: " << items[i][j]->getDamage() << std::endl;
+            if (items[i][j]->getName().find(itemName) != std::string::npos) return items[i][j];
+        }
+
     }
  
     return nullptr;
@@ -109,4 +114,8 @@ void Player::setMaxHealth(int value) {
 
 int Player::getMaxHealth() {
     return maxHealth;
+}
+
+std::string Player::getName() {
+    return name;
 }

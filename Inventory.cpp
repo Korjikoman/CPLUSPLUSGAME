@@ -1,12 +1,19 @@
 #include "Inventory.h"
 
 // Inventory space is a static variable
-int Inventory::space = 10;
+int Inventory::space = 4;
 
 Inventory::Inventory() {
     std::cout << "Initializing Inventory...\n";
 
-    inventory_items = new Item * [space];
+    inventory_items = new Item * *[Inventory::space];
+    cols = rows = Inventory::space / 2;
+    for (int i = 0; i < Inventory::space; ++i) {
+        inventory_items[i] = new Item * [Inventory::space];  // Для каждой строки выделяем память для колонок
+        for (int j = 0; j < Inventory::space; ++j) {
+            inventory_items[i][j] = nullptr;  // Изначально все ячейки пустые (nullptr)
+        }
+    }
 
     items_count = 0;
     current_element = 0;
@@ -22,40 +29,58 @@ void Inventory::changeSpace(int new_space) {
 int Inventory::getCurrentElement() { return current_element; }
 int Inventory::getItemsCount() { return items_count; }
 
+int Inventory::getRow() {
+    return items_count / cols;
+}
+int Inventory::getCol() {
+    
+    return items_count % cols;
+
+}
+
 // Выводим интвентарь
 void Inventory::print_inventory()
 {
-    printf("Inventory space: %d\n", space);
-    printf("Your inventory:\n");
-    if (items_count == 0) printf("There's nothing in it\n");
-    for (int i = 0; i < items_count; i++)
-    {
-        std::cout << "  Item " << i + 1 << ": " << inventory_items[i]->getName() << std::endl;
+    std::cout << "Inventory (in matrix form):\n";
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (inventory_items[i][j] != nullptr) {
+                std::cout << inventory_items[i][j]->getName();  // Выводим информацию о предмете
+            }
+            else {
+                std::cout << "[Empty]";  // Печатаем, если ячейка пустая
+            }
+
+            // Разделяем столбцы пробелом для читаемости
+            std::cout << "\t";
+        }
+        std::cout << std::endl;  // Переход на новую строку после каждого ряда
     }
-    std::cout << "Inventory current element: " << current_element << std::endl;
 }
 
 // Добавляем предмет в инвентарь
-int Inventory::inventoryAddItem(Item* item)
-{
-    if (items_count >= space)
-    {
-        printf("Inventory is full! Cannot add item '%s'.\n", item->getName());
-        return 0; // Не удалось добавить предмет
+void Inventory::inventoryAddItem(Item* item) {
+    if (items_count >= rows * cols) {
+        std::cout << "Inventory is full!" << std::endl;
+        return;  // Предотвращаем добавление
     }
 
-    // Добавление предмета в массив строк
-    inventory_items[items_count] = item;
-    items_count++;
+    int row = getRow();
+    int col = getCol();
 
-    item->Collected();   // Помечаем предмет как собранный
-    std::cout << "Item " << item->getName() << " added to inventory.\n";
-    return 0;
+    // Проверяем, что позиция действительно свободна
+    if (inventory_items[row][col] != nullptr) {
+        std::cout << "Error: Slot (" << row << ", " << col << ") is already occupied.\n";
+        return;
+    }
+
+    inventory_items[row][col] = item;  // Помещаем предмет
+    items_count++;
+    std::cout << "Item added to slot (" << row << ", " << col << ")\n";
 }
 
-Item** Inventory::getInventoryItems()
+Item*** Inventory::getInventoryItems()
 {
-   
     return inventory_items;
     
 }

@@ -1,19 +1,20 @@
 #include "Monsters.h"
 
 
+
 Monsters::Monsters() {
     x = 0;
     y = 0;
     damage = 2;
     is_alive = true;
-
-
+    health = 10;
+    srand(static_cast<unsigned int>(time(0))); // Инициализация генератора случайных чисел
+    name = names[rand() % names.size()];
 }
 
-// инициализация
-Monsters::Monsters(int m_x, int m_y, int m_damage, int m_health) :
-    x(m_x), y(m_y), health(), damage(m_damage), is_alive(true)
-{}
+std::vector<std::string> Monsters::names = { "Bob", "Dill", "Frank", "Sugarboy" };
+
+
 int Monsters::getX() const { return x; }
 int Monsters::getY() const { return y; }
 int Monsters::getDamage() const { return damage; }
@@ -25,6 +26,7 @@ void Monsters::changeHealthValue(int value) {
 bool Monsters::isAlive() const { return is_alive; }
 // вывод характеристик монстра
 void Monsters::printMonster() {
+    std::cout << "Monster Name: " << name << std::endl;
     printf("Monster Position: (%d, %d)\n", x, y);
     printf("Damage: %d\n", damage);
     printf("Health: %d\n", health);

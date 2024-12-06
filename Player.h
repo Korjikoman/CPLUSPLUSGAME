@@ -1,6 +1,8 @@
 #pragma once
 #include "Inventory.h"
 #include "Potion.h"
+#include "Exceptions.h"
+
 #include <iostream>
 #include <stdio.h>
 #include <stdbool.h>
@@ -16,7 +18,7 @@ class Player // класс для представления игрока
 private:
 
     int x, y;
-    
+    std::string name;
     int health;
     static int maxHealth;
     
@@ -32,7 +34,8 @@ private:
 public:
     // инициализация
     Player();
-
+    std::string getName();
+    
     // перемещаем игрока
     Player& movePlayer(int dx, int dy);
 
