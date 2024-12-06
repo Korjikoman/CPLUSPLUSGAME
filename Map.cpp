@@ -140,7 +140,6 @@ void Map::showInitializedClasses() {
 
 
 void Map::checkCollisions() {
-    Inventory inventory = player.getInventory();
 
 
     // Проверяем столкновения с монстрами
@@ -177,7 +176,7 @@ void Map::checkCollisions() {
             std::cout << "Player found a " << items[i].getName() << "!\n";
 
             player.addItems(&items[i]);
-
+            
         }
     }
 

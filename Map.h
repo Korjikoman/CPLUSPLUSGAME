@@ -27,7 +27,6 @@ private:
 	Player player;
 	
 	Item* items;
-	Inventory inventory;
 	int monsters_count;
 	int monster_index;
 	int items_count;

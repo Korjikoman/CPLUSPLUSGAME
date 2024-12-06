@@ -13,10 +13,11 @@ private:
     int items_count;
     int current_element;
     Item*** inventory_items;
+    int cols;
+    int rows;
 
 public:
     Inventory();
-    ~Inventory();
     static int getSpace();
     static void changeSpace(int new_space);
     int getCurrentElement();
@@ -27,5 +28,6 @@ public:
 
 
     Item*** getInventoryItems();
-
+    int getRow(); 
+    int getCol(); 
 };
