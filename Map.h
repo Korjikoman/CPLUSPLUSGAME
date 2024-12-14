@@ -61,7 +61,7 @@ public:
 	void moveObjectsRandomly();
 
 
-	Player getPlayer();
+	Player& getPlayer();
 
 	void movePlayer(int dx, int dy);
 	void addPlayer(Player& newPlayer);

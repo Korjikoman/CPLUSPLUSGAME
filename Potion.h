@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <cstdlib> // ƒл€ std::rand и std::srand
-#include <ctime> 
-
 
 
 class Potion // класс дл€ представлени€ зелий восстановлени€

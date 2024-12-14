@@ -31,7 +31,7 @@ Map::Map() {
 //    std::cout << "Player " << newPlayer.getName() << " added to the map." << std::endl;
 //}
 
-Player Map::getPlayer() {
+Player& Map::getPlayer() {
     return player;
 }
 //void Map::addMonster(Monsters monster) {
@@ -76,8 +76,8 @@ Player Map::getPlayer() {
 void Map::moveObjectsRandomly() {
 
 	for (int i = 0; i < monsters_count; i++) {
-		monsters[i].changeX(rand() % 50);
-		monsters[i].changeY(rand() % 50);
+		monsters[i].setX(rand() % 50);
+		monsters[i].setY(rand() % 50);
 	}
 
 	for (int i = 0; i < items_count; i++) {

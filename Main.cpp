@@ -8,7 +8,7 @@ int main()
     
     // initializing map and objects on it
     Map map;
-    Player player = map.getPlayer();
+    Player& player = map.getPlayer();
 
 
     // Game loop

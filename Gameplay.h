@@ -1,16 +1,10 @@
 #pragma once
-#include <iostream>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-#include <cstdlib> // Äëÿ std::rand è std::srand
-#include <ctime> 
-
-#include "Player.h"
-#include "Monsters.h"
 #include "Potion.h"
 #include "Coin.h"
 #include "Exceptions.h"
+#include "Player.h"
+#include "Monsters.h"
+
 
 
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
