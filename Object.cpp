@@ -77,9 +77,10 @@ int Object::getMaxHealth()
     return maxHealth;
 }
 
-void Object::heal()
+void Object::heal(int value)
 {
-    health = maxHealth;
+    health += value;
+    std::cout << "Object's health restored\n";
 }
 
 void Object::setMaxHealth(int value)

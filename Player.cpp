@@ -103,4 +103,6 @@ void Player::heal() {
     else {
         std::cout << "No potions left to heal!\n";
     }
+
+    /*Object::heal(10);*/
 }
