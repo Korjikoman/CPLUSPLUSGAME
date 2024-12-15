@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player()
+Player::Player() : Object(0, 0, 0, 0)
 {
     std::cout << "Initializing player...\n";
     std::cout << "Player's name (<= 100 characters): \n";
