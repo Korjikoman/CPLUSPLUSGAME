@@ -5,7 +5,7 @@ class Monsters: public Object // класс для представления монстров
 {
     friend void damageMonster(Monsters& monster, int damage);
 private:
-    std::string name;
+
     static std::vector<std::string> names;
 
 public:

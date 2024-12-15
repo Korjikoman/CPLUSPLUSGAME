@@ -156,7 +156,8 @@ void Map::checkCollisions() {
     for (int i = 0; i < potions_count; i++) {
         if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
             std::cout << "Player found a potion!\n";
-            player.heal(potions[i].getHealthRestore());
+            player.addPotion(potions[i]);
+            potions[i].collect();
 
         }
     }
@@ -165,6 +166,7 @@ void Map::checkCollisions() {
     for (int i = 0; i < coins_count; i++) {
         if (player.getX() == coins[i].getX() && player.getY() == coins[i].getY()) {
             std::cout << "Player found a coin!\n";
+            coins[i].collect_coin(player, 5);
             player.add_coins(5);
 
         }

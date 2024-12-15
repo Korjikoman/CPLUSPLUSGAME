@@ -11,14 +11,13 @@ class Player: public Object // класс для представления игрока
 private:
     int speed;
     Inventory inventory;
-    int potions_count;
     int coins;
 
 public:
     // инициализация
     Player();
     std::string getName();
-    
+    void heal();
     // перемещаем игрока
     Player& movePlayer(int dx, int dy);
 
@@ -30,6 +29,8 @@ public:
     int getspeed();
     void printPlayer();
     void printCoordinates();
+    
+    void addPotion(Potion& potion);
 
     void addItems(Item* item);
     int getItemsCount();

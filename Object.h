@@ -30,7 +30,7 @@ public:
 	void changeHealthValue(int new_value);
 	int getCurrentHealth();
 	static int getMaxHealth();
-	void heal(int value);
+	void heal();
 
 	int& getX();
 	int& getY();
@@ -39,5 +39,6 @@ public:
 	
 	int getDamage();
 	void setDamage(int value);
+
 	
 };

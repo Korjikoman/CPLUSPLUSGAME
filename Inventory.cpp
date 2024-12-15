@@ -15,8 +15,16 @@ Inventory::Inventory() {
         }
     }
 
+    inventory_potions = new Potion*[Inventory::space];
+   
+    for (int i = 0; i < Inventory::space; ++i) {
+            inventory_potions[i] = nullptr;  // Изначально все ячейки пустые (nullptr)
+    }
+
+
     items_count = 0;
     current_element = 0;
+    potions_count = 0;
 }
 
 
@@ -56,6 +64,18 @@ void Inventory::print_inventory()
         }
         std::cout << std::endl;  // Переход на новую строку после каждого ряда
     }
+
+    std::cout << "Potions:\n";
+    for (int i = 0; i < rows; ++i) {
+            if (inventory_potions[i] != nullptr) {
+                std::cout <<"[Potion]";  // Выводим информацию о предмете
+            }
+            else {
+                std::cout << "[Empty]";  // Печатаем, если ячейка пустая
+            }
+            std::cout << "\t";
+    }
+    std::cout << "\n";
 }
 
 // Добавляем предмет в инвентарь
@@ -78,6 +98,48 @@ void Inventory::inventoryAddItem(Item* item) {
     items_count++;
     std::cout << "Item added to slot (" << row << ", " << col << ")\n";
 }
+
+// Добавляем зелье в инвентарь
+void Inventory::inventoryAddPotion(Potion* potion) {
+    if (potions_count >= Inventory::space) {
+        std::cout << "Inventory is full!" << std::endl;
+        return;  // Предотвращаем добавление
+    }
+
+    // Проверяем, что позиция действительно свободна
+    if (inventory_potions[potions_count] != nullptr) {
+        std::cout << "Error: Slot (" << potions_count << ") is already occupied.\n";
+        return;
+    }
+
+    inventory_potions[potions_count] = potion;  // Помещаем предмет
+    potions_count++;
+    std::cout << "Potion added to slot (" << potions_count << ")\n";
+}
+
+void Inventory::usePotion()
+{
+    if (potions_count <= 0) {
+        std::cout << "No potions left!\n";
+        return;
+    }
+
+    // Удаляем последнее зелье
+    inventory_potions[potions_count - 1]->changeX(-1);
+    inventory_potions[potions_count - 1]->changeY(-1);
+
+    inventory_potions[potions_count - 1] = nullptr;
+
+    // Уменьшаем количество зелий
+    potions_count--;
+    std::cout << "Potion used! Potions left: " << potions_count << "\n";
+}
+
+int Inventory::getPotionsCount()
+{
+    return potions_count;
+}
+
 
 Item*** Inventory::getInventoryItems()
 {

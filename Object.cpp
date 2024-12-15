@@ -61,6 +61,7 @@ void Object::setDamage(int value)
     damage = value;
 }
 
+
 int Object::getCurrentHealth()
 {
     return health;
@@ -76,9 +77,9 @@ int Object::getMaxHealth()
     return maxHealth;
 }
 
-void Object::heal(int value)
+void Object::heal()
 {
-    health += value;
+    health = maxHealth;
 }
 
 void Object::setMaxHealth(int value)

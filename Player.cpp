@@ -22,7 +22,6 @@ Player::Player()
 
     // »нициализаци€ родительского класса Object
 
-    potions_count = 0; // »нициализаци€ по умолчанию
     coins = 0;         // Ќачальное количество монет
 
     std::cout << "Player " << name << " initialized successfully!\n";
@@ -38,6 +37,11 @@ Player& Player::movePlayer(int x, int y) {
 
 void Player::printCoordinates() {
     std::cout << "Player is at (" << getX() << ", " << getY() << ")\n";
+}
+
+void Player::addPotion(Potion& potion)
+{
+    inventory.inventoryAddPotion(&potion);
 }
 
 // провер€ем, умер ли игрок
@@ -59,6 +63,7 @@ void Player::printPlayer()
     printf("Health: %d/%d\n", getCurrentHealth(), getMaxHealth());
     printf("Speed: %d\n", speed);
     printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
+    std::cout << "Player has got " << inventory.getPotionsCount() << " potions.\n";
     printf("Player coins: %d\n", coins);
 } // вывод игрока
 
@@ -87,4 +92,15 @@ Item* Player::getItem(const std::string& itemName) {
 
 std::string Player::getName() {
     return name;
+}
+
+void Player::heal() {
+    if (inventory.getPotionsCount() > 0) {
+
+        inventory.usePotion();
+        std::cout << "Player used a potion. Potions left: " << inventory.getPotionsCount() << "\n";
+    }
+    else {
+        std::cout << "No potions left to heal!\n";
+    }
 }
