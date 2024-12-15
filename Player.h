@@ -9,7 +9,6 @@ class Player: public Object // класс для представления игрока
 {
     friend void damagePlayer(Player& player, int damage);
 private:
-    std::string name;
     int speed;
     Inventory inventory;
     int potions_count;

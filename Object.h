@@ -16,6 +16,9 @@ private:
 
 	int damage;
 	bool is_alive;
+
+protected:
+	std::string name; // Имя объекта
 public:
 	Object();
 	Object(int x, int y, int health, int damage);
