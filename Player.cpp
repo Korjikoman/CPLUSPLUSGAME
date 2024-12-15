@@ -20,10 +20,17 @@ Player::Player() : Object(0, 0, 0, 0)
     int init_damage = safeInt(1, 2);
     setDamage(init_damage);
 
-    // Инициализация родительского класса Object
+   
 
     coins = 0;         // Начальное количество монет
 
+    std::cout << "Player " << name << " initialized successfully!\n";
+}
+
+Player::Player(std::string name, int x, int y, int health, int speedd, int damage) : Object(x,y,health,damage)
+{
+    std::cout << "Initializing player...\n";
+ 
     std::cout << "Player " << name << " initialized successfully!\n";
 }
 

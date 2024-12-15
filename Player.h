@@ -16,6 +16,7 @@ private:
 public:
     // инициализация
     Player();
+    Player(std::string name, int x, int y, int health, int speedd, int damage);
     std::string getName();
     void heal();
     // перемещаем игрока
