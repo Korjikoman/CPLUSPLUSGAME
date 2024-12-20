@@ -26,7 +26,9 @@ public:
     int getCurrentElement();
     int getItemsCount();
 
-    void print_inventory();
+    friend ostream& operator<<(ostream& os, Inventory& inventory);
+
+
     void inventoryAddItem(Item* item);
     void inventoryAddPotion(Potion* potion);
 

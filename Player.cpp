@@ -30,7 +30,8 @@ Player::Player() : Object(0, 0, 0, 0)
 Player::Player(std::string name, int x, int y, int health, int speedd, int damage) : Object(x,y,health,damage)
 {
     std::cout << "Initializing player...\n";
- 
+    speed = 1;
+    coins = 0;
     std::cout << "Player " << name << " initialized successfully!\n";
 }
 
@@ -63,18 +64,6 @@ int Player::get_coins() { return coins; }
 
 int Player::getspeed() { return speed; }
 
-// выводим основные характеристики игрока
-void Player::printPlayer()
-{
-    printf("Player Position: (%d, %d)\n", getX(), getY());
-    printf("Health: %d/%d\n", getCurrentHealth(), getMaxHealth());
-    printf("Speed: %d\n", speed);
-    printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
-    std::cout << "Player has got " << inventory.getPotionsCount() << " potions.\n";
-    printf("Player coins: %d\n", coins);
-} // вывод игрока
-
-
 void Player::addItems(Item* item)
 {
     inventory.inventoryAddItem(item);
@@ -103,7 +92,7 @@ std::string Player::getName() {
 
 void Player::heal() {
     if (inventory.getPotionsCount() > 0) {
-
+        changeHealthValue(4);
         inventory.usePotion();
         std::cout << "Player used a potion. Potions left: " << inventory.getPotionsCount() << "\n";
     }
@@ -112,4 +101,30 @@ void Player::heal() {
     }
 
     /*Object::heal(10);*/
+}
+
+
+Player& Player::operator=(Object& obj) {
+    if (this != &obj) {
+        // Копируем общие поля базового класса
+        setX(obj.getX());
+        setY(obj.getY());
+        setHealth(obj.getCurrentHealth());
+        setDamage(obj.getDamage());
+        this->name = obj.getName(); 
+    }
+    return *this;
+}
+
+// выводим основные характеристики игрока
+std::ostream& operator<<(std::ostream& os, Player& player) {
+    
+    os << static_cast<Object&>(player);
+    os << "Speed: " << player.getspeed() << "\n";
+    os << "Inventory Space: " << player.getInventory().getSpace()
+        << ", Items Count: " << player.getInventory().getItemsCount() << "\n";
+    os << "Potions: " << player.getInventory().getPotionsCount() << "\n";
+    os << "Coins: " << player.get_coins() << "\n";
+    return os;
+    
 }

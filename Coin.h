@@ -19,11 +19,11 @@ public:
     int getX() const;
     int getY() const;
     int getValue() const;
-    void print_coin();
     bool is_collected();
     void collect_coin(Player& player, int value);
 
     void changeX(int value);
     void changeY(int value);
+    friend ostream& operator<<(ostream& os, Coin& coin);
 
 };

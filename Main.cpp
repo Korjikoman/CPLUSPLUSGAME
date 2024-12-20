@@ -11,6 +11,7 @@ int main()
     Player& player = map.getPlayer();
 
 
+
     // Game loop
     bool game_running = true;
     while (game_running && player.getCurrentHealth() > 0) {

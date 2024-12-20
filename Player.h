@@ -3,6 +3,9 @@
 #include "Potion.h"
 #include "Exceptions.h"
 #include "Object.h"
+#include <iostream>
+#include <format>
+
 
 
 class Player: public Object // класс для представления игрока
@@ -36,5 +39,11 @@ public:
     void addItems(Item* item);
     int getItemsCount();
     Item* getItem(const std::string& itemName);
-   
+        
+    // перегрузка оператора присваивания
+    Player& operator=(Object& obj);
+    friend ostream& operator<<(ostream& os, Player& player);
+    
+
+
 };

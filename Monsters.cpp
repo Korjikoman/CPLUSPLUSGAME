@@ -11,14 +11,6 @@ Monsters::Monsters() {
 }
 
 
-// вывод характеристик монстра
-void Monsters::printMonster() {
-    std::cout << "Monster Name: " << name << std::endl;
-    printf("Monster Position: (%d, %d)\n", getX(), getY());
-    printf("Damage: %d\n", getDamage());
-    printf("Health: %d\n", getCurrentHealth());
-    printf("Is Alive: %s\n", isAlive() ? "Yes" : "No");
-}
 
 void Monsters::move(int dx, int dy) {
     setX(dx);
@@ -27,3 +19,23 @@ void Monsters::move(int dx, int dy) {
 }
 
 
+Monsters& Monsters::operator=(Object& obj) {
+    if (this != &obj) {
+        // Копируем общие поля базового класса
+        setX(obj.getX());
+        setY(obj.getY());
+        setHealth(obj.getCurrentHealth());
+        setDamage(obj.getDamage());
+        this->name = obj.getName();
+    }
+    return *this;
+}
+
+// вывод характеристик монстра
+std::ostream& operator<<(std::ostream& os, Monsters& monster) {
+    os << static_cast<Object&>(monster);
+
+    printf("Health: %d\n", monster.getCurrentHealth());
+    printf("Is Alive: %s\n", monster.isAlive() ? "Yes" : "No");
+    return os;
+}

@@ -17,7 +17,6 @@ void damagePlayer(Player& player, int damage) {
     }
 }
 
-
 void damageMonster(Monsters& monster, int damage) {
     monster.changeHealthValue(monster.getCurrentHealth() - damage);
 
@@ -110,15 +109,6 @@ void battle_with_monster(Player& player, Monsters& monster)
     }
     printf("\n\n");
 
-}
-
-// используем зелье для восстановления здоровья
-void use_potion(Player& player, Potion& potion) {
-    /*if (potion.isCollected() || potion.getHealthRestore() <= 0) return;
-
-    std::cout << "Player found a potion! Restoring " << potion.getHealthRestore() << " health." << std::endl;
-    player.health += potion.getHealthRestore();
-    potion.collect();*/
 }
 
 void changeSettings()

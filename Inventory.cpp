@@ -46,38 +46,6 @@ int Inventory::getCol() {
 
 }
 
-// Выводим интвентарь
-void Inventory::print_inventory()
-{
-    std::cout << "Inventory (in matrix form):\n";
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            if (inventory_items[i][j] != nullptr) {
-                std::cout << inventory_items[i][j]->getName();  // Выводим информацию о предмете
-            }
-            else {
-                std::cout << "[Empty]";  // Печатаем, если ячейка пустая
-            }
-
-            // Разделяем столбцы пробелом для читаемости
-            std::cout << "\t";
-        }
-        std::cout << std::endl;  // Переход на новую строку после каждого ряда
-    }
-
-    std::cout << "Potions:\n";
-    for (int i = 0; i < rows; ++i) {
-            if (inventory_potions[i] != nullptr) {
-                std::cout <<"[Potion]";  // Выводим информацию о предмете
-            }
-            else {
-                std::cout << "[Empty]";  // Печатаем, если ячейка пустая
-            }
-            std::cout << "\t";
-    }
-    std::cout << "\n";
-}
-
 // Добавляем предмет в инвентарь
 void Inventory::inventoryAddItem(Item* item) {
     if (items_count >= rows * cols) {
@@ -147,3 +115,35 @@ Item*** Inventory::getInventoryItems()
     
 }
 
+// Выводим инвентарь
+ostream& operator<<(ostream& os, Inventory& inventory)
+{
+    os << "Inventory (in matrix form):\n";
+    // Вывод предметов в инвентаре
+    for (int i = 0; i < inventory.rows; ++i) {
+        for (int j = 0; j < inventory.cols; ++j) {
+            if (inventory.inventory_items[i][j] != nullptr) {
+                os << inventory.inventory_items[i][j]->getName(); 
+            }
+            else {
+                os << "[Empty]"; 
+            }
+            os << "\t"; 
+        }
+        os << "\n"; 
+    }
+
+    // Вывод зелий
+    os << "Potions:\n";
+    for (int i = 0; i < inventory.potions_count; ++i) {
+        if (inventory.inventory_potions[i] != nullptr) {
+            os << "[Potion]";  
+        }
+        else {
+            os << "[Empty]";  
+        }
+        os << "\t";  
+    }
+    os << "\n";
+    return os;
+}

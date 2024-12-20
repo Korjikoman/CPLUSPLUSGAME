@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
+using namespace std;
 
 class Potion // класс для представления зелий восстановления
 {
@@ -21,7 +21,7 @@ public:
     int getY() const;
     static int getHealthRestore();
     static void setHealthRestore(int value);
-    void print_potion();
+
 
     void move(int dx, int dy);
     void move_random();
@@ -36,5 +36,7 @@ public:
 
     // Перегрузка постфиксного оператора ++
     Potion operator++(int);
+
+    friend ostream& operator<<(ostream& os, Potion& potion);
 
 };

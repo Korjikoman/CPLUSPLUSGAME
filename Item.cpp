@@ -25,12 +25,7 @@ int Item::getDamage() { return damage; }
 bool Item::isCollected() { return collected; }
 void Item::Collected() { collected = true; }
 
-// вывод характеристик оружия
-void Item::print_item() {
-    printf("Item Position: (%d, %d)\n", x, y);
-    printf("Item damage: %d\n", damage);
-    printf("Is item collected: %s\n", collected ? "Yes" : "No");
-}
+
 
 void Item::changeX(int value)
 {
@@ -40,4 +35,13 @@ void Item::changeX(int value)
 void Item::changeY(int value)
 {
     y = value;
+}
+
+ostream& operator<<(ostream& os, Item& item)
+{
+    os << "Item Position: (" << item.x << " ; " << item.y << ")\n";
+    os << "Item damage: " << item.damage << "\n";
+    os << "Collected: " << (item.collected ? "Yes" : "No") << "\n";
+
+    return os;
 }

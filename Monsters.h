@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 
+
+
 class Monsters: public Object // класс для представления монстров
 {
     friend void damageMonster(Monsters& monster, int damage);
@@ -10,8 +12,9 @@ private:
 
 public:
     Monsters();
-
+    Monsters& operator=(Object& obj);
     // вывод характеристик монстра
-    void printMonster();
     void move(int dx, int dy);
+    friend ostream& operator<<(ostream& os, Monsters& monster);
+
 };

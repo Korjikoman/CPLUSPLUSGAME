@@ -61,6 +61,11 @@ void Object::setDamage(int value)
     damage = value;
 }
 
+std::string Object::getName()
+{
+    return name;
+}
+
 
 int Object::getCurrentHealth()
 {

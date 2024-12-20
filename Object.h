@@ -6,6 +6,8 @@
 #include <cstdlib> // ƒл€ std::rand и std::srand
 #include <ctime> 
 #include <vector>
+using namespace std;
+
 
 class Object // класс дл€ представлени€ объектов. явл€етс€ родительским к классам Player and Monster 
 {
@@ -39,6 +41,13 @@ public:
 	
 	int getDamage();
 	void setDamage(int value);
+	std::string getName();
+	friend std::ostream& operator<<(std::ostream& os, Object& obj) {
+		os << "Name: " << obj.name << "\n";
+		os << "Position: (" << obj.x << ", " << obj.y << ")\n";
+		os << "Health: " << obj.health << "/" << obj.maxHealth << "\n";
+		os << "Damage: " << obj.damage << "\n";
 
-	
+		return os;
+	}
 };

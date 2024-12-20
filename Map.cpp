@@ -113,28 +113,28 @@ void Map::movePlayer(int dx, int dy) {
 
 void Map::showInitializedClasses() {
     std::cout << "------------------Player:\n";
-    player.printPlayer();
+    std::cout << player << "\n";
     Inventory inventory = player.getInventory();
     std::cout << "------------------Player's inventory:\n";
-    inventory.print_inventory();
+    std::cout << inventory;
 
     std::cout << "------------------Monsters:\n";
     for (int i = 0; i < monsters_count; i++) {
-        monsters[i].printMonster();
+        std::cout << monsters[i];
     }
 
     std::cout << "------------------Items:\n";
     for (int i = 0; i < items_count; i++) {
-        items[i].print_item();
+        std::cout << items[i];
     }
     std::cout << "------------------Potions:\n";
     for (int i = 0; i < potions_count; i++) {
-        potions[i].print_potion();
+        std::cout << potions[i];
     }
 
     std::cout << "------------------Coins:\n";
     for (int i = 0; i < coins_count; i++) {
-        coins[i].print_coin();
+        std::cout << coins[i];
     }
 }
 
