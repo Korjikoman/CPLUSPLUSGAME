@@ -3,10 +3,10 @@
 
 
 
-Coin::Coin() : x(0), y(0), value(5), collected(false) {}
+Coin::Coin() : Coordinates(0,0), value(5), collected(false) {}
 
-int Coin::getX() const { return x; }
-int Coin::getY() const { return y; }
+int Coin::getX()  { return x; }
+int Coin::getY()  { return y; }
 int Coin::getValue() const { return value; }
 
 bool Coin::is_collected() {

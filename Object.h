@@ -6,13 +6,13 @@
 #include <cstdlib> // ƒл€ std::rand и std::srand
 #include <ctime> 
 #include <vector>
+#include "Coordinates.h"
 using namespace std;
 
 
-class Object // класс дл€ представлени€ объектов. явл€етс€ родительским к классам Player and Monster 
+class Object: public Coordinates // класс дл€ представлени€ объектов. явл€етс€ родительским к классам Player and Monster 
 {
 private:
-	int x, y;
 	int health;
 	static int maxHealth;
 
@@ -38,8 +38,8 @@ public:
 	static int getMaxHealth();
 	void heal(int value);
 
-	int& getX();
-	int& getY();
+	int getX() override;
+	int getY() override;
 	void setX(int value);
 	void setY(int value);
 	

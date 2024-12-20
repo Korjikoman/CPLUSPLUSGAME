@@ -2,12 +2,12 @@
 
 int Potion::health_restore = 4;
 
-Potion::Potion() : x(0), y(0), collected(false) {}
+Potion::Potion() : Coordinates(0,0), collected(false) {}
 
 bool Potion::isCollected() const { return collected; }
 void Potion::collect() { collected = true; };
-int Potion::getX() const { return x; }
-int Potion::getY() const { return y; }
+int Potion::getX()  { return x; }
+int Potion::getY()  { return y; }
 int Potion::getHealthRestore() { return health_restore; }
 void Potion::setHealthRestore(int value)
 {

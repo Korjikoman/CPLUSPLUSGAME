@@ -2,21 +2,16 @@
 
 int Object::maxHealth = 10;
 
-Object::Object()
+Object::Object() : Coordinates(0,0)
 {
-    this->x = 0;
-    this->y = 0;
     this->health = 0;
     this->damage = 0;
     this->is_alive = true;
 }
 
-Object::Object(int x, int y, int health, int damage) {
-    this->x = x;
-    this->y = y;
-    this->health = health;
-    this->damage = damage;
-    this->is_alive = true;
+Object::Object(int x, int y, int health, int damage) : Coordinates(x,y), health(health),
+damage(damage)
+{
     std::cout << "Object initiallated successfully!\n";
 }
 
@@ -37,12 +32,12 @@ void Object::isDead_notVirtual()
     isDead();
 }
 
-int& Object::getX()
+int Object::getX() 
 {
     return x;
 }
 
-int& Object::getY()
+int Object::getY() 
 {
     return y;
 }

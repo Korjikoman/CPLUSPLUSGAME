@@ -2,7 +2,7 @@
 
 
 
-Item::Item() {
+Item::Item() : Coordinates(0,0) {
     std::cout << "Initializing Item...\n";
 
     std::cout << "Enter the name of the item: ";
@@ -13,8 +13,6 @@ Item::Item() {
     std::cin >> damage;
 
     collected = false; // По умолчанию предмет не собран
-    x = 0;
-    y = 0;
     std::cout << "Item initialized successfully!\n";
 }
 

@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "Coordinates.h"
 using namespace std;
 
-class Potion // класс для представления зелий восстановления
+class Potion: public Coordinates // класс для представления зелий восстановления
 {
 
 private:
-    int x, y;
     static int health_restore;
     bool collected;
 public:
@@ -17,8 +17,8 @@ public:
 
     bool isCollected() const;
     void collect();
-    int getX() const;
-    int getY() const;
+    int getX() override;
+    int getY() override;
     static int getHealthRestore();
     static void setHealthRestore(int value);
 
