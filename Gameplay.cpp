@@ -12,8 +12,8 @@ void damagePlayer(Player& player, int damage) {
 
     player.changeHealthValue(player.getCurrentHealth() - damage);
     if (player.getCurrentHealth() <= 0) {
-        player.isDead();
-        printf("Player is dead\n");
+        //player.isDead();
+        player.isDead_notVirtual();
     }
 }
 
@@ -22,8 +22,8 @@ void damageMonster(Monsters& monster, int damage) {
 
     if (monster.getCurrentHealth() <= 0)
     {
-        monster.isDead();
-        std::cout << "Monster defeated!\n";
+        //monster.isDead();
+        monster.isDead_notVirtual();
     }
 }
 

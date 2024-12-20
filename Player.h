@@ -34,6 +34,9 @@ public:
     void printPlayer();
     void printCoordinates();
     
+    void isDead() override;
+
+
     void addPotion(Potion& potion);
 
     void addItems(Item* item);

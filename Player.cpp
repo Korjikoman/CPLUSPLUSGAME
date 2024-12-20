@@ -128,3 +128,16 @@ std::ostream& operator<<(std::ostream& os, Player& player) {
     return os;
     
 }
+
+
+void Player::isDead() {
+    
+    Object::isDead();
+
+    std::cout << "Player is dead\n";
+    is_alive = false;
+
+    std::cout << "Player earned " << coins << " coins\n";
+    std::cout << "Cleaning inventroy\n";
+    inventory.clearIventory();
+}

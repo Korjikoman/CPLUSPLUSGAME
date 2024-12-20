@@ -17,9 +17,10 @@ private:
 	static int maxHealth;
 
 	int damage;
-	bool is_alive;
+	
 
 protected:
+	bool is_alive;
 	std::string name; // Имя объекта
 public:
 	Object();
@@ -28,7 +29,10 @@ public:
 	static void setMaxHealth(int value);
 	void setHealth(int value);
 	bool isAlive();
-	void isDead();
+
+	void virtual isDead();
+	void isDead_notVirtual();
+
 	void changeHealthValue(int new_value);
 	int getCurrentHealth();
 	static int getMaxHealth();

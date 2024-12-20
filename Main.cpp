@@ -3,6 +3,16 @@
 
 int main()
 {
+
+
+
+    /*Object object{0,0,10,10};
+    Object* object1{ &object };
+    object1->isDead();
+
+    Player player;
+    object1 = &player;
+    object1->isDead();*/
     
     // Инициализируем объекты класса
     
@@ -10,7 +20,7 @@ int main()
     Map map;
     Player& player = map.getPlayer();
 
-
+    
 
     // Game loop
     bool game_running = true;

@@ -18,6 +18,15 @@ void Monsters::move(int dx, int dy) {
 
 }
 
+void Monsters::isDead()
+{
+    Object::isDead();
+
+    is_alive = false;
+    move(-1, -1);
+    std::cout << name << " is dead!\n";
+}
+
 
 Monsters& Monsters::operator=(Object& obj) {
     if (this != &obj) {

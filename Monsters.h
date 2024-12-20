@@ -16,5 +16,5 @@ public:
     // вывод характеристик монстра
     void move(int dx, int dy);
     friend ostream& operator<<(ostream& os, Monsters& monster);
-
+    void isDead();
 };

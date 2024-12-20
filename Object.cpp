@@ -29,6 +29,12 @@ void Object::isDead()
 {
     health = 0;
     is_alive = false;
+    std::cout << "Object is dead\n";
+}
+
+void Object::isDead_notVirtual()
+{
+    isDead();
 }
 
 int& Object::getX()

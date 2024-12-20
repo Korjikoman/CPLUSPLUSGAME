@@ -28,6 +28,7 @@ public:
 
     friend ostream& operator<<(ostream& os, Inventory& inventory);
 
+    void clearIventory();
 
     void inventoryAddItem(Item* item);
     void inventoryAddPotion(Potion* potion);

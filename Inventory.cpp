@@ -46,6 +46,32 @@ int Inventory::getCol() {
 
 }
 
+void Inventory::clearIventory()
+{
+    // Очищаем массив inventory_items
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            // Если элемент существует, освобождаем память
+            if (inventory_items[i][j] != nullptr) {
+                delete inventory_items[i][j];  
+                inventory_items[i][j] = nullptr;  
+            }
+        }
+    }
+
+    // Очищаем массив inventory_potions
+    for (int i = 0; i < rows; ++i) {
+        if (inventory_potions[i] != nullptr) {
+            delete inventory_potions[i];  
+            inventory_potions[i] = nullptr; 
+        }
+    }
+
+    // Обнуляем счетчики
+    items_count = 0;
+    potions_count = 0;
+}
+
 // Добавляем предмет в инвентарь
 void Inventory::inventoryAddItem(Item* item) {
     if (items_count >= rows * cols) {
