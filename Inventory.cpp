@@ -154,14 +154,14 @@ ostream& operator<<(ostream& os, Inventory& inventory)
             else {
                 os << "[Empty]"; 
             }
-            os << "\t"; 
+            os << " "; 
         }
         os << "\n"; 
     }
 
     // Вывод зелий
     os << "Potions:\n";
-    for (int i = 0; i < inventory.potions_count; ++i) {
+    for (int i = 0; i < inventory.getSpace(); ++i) {
         if (inventory.inventory_potions[i] != nullptr) {
             os << "[Potion]";  
         }

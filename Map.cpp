@@ -94,6 +94,10 @@ void Map::moveObjectsRandomly() {
 		coins[i].changeX(rand() % 50);
 		coins[i].changeY(rand() % 50);
 	}
+    for (int i = 0; i < potions_count; i++) {
+        potions[i].changeX(rand() % 50);
+        potions[i].changeY(rand() % 50);
+    }
 }
 
 
