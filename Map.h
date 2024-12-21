@@ -5,12 +5,13 @@
 #include "Player.h"
 #include "Gameplay.h"
 #include "Exceptions.h"
-
+#include "CollisionsChecker.h"
 
 #include <iostream>
-#include<cstdlib>
 #include <vector>
-
+#include <functional>
+#include <string>
+#include <memory>
 
 class Map
 {
