@@ -3,16 +3,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <cstdlib> // ƒл€ std::rand и std::srand
-#include <ctime> 
+#include "Coordinates.h"
+using namespace std;
 
-
-
-class Potion // класс дл€ представлени€ зелий восстановлени€
+class Potion: public Coordinates // класс дл€ представлени€ зелий восстановлени€
 {
 
 private:
-    int x, y;
     static int health_restore;
     bool collected;
 public:
@@ -20,11 +17,11 @@ public:
 
     bool isCollected() const;
     void collect();
-    int getX() const;
-    int getY() const;
+    int getX() override;
+    int getY() override;
     static int getHealthRestore();
     static void setHealthRestore(int value);
-    void print_potion();
+
 
     void move(int dx, int dy);
     void move_random();
@@ -39,5 +36,7 @@ public:
 
     // ѕерегрузка постфиксного оператора ++
     Potion operator++(int);
+
+    friend ostream& operator<<(ostream& os, Potion& potion);
 
 };

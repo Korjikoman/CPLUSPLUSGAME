@@ -1,53 +1,50 @@
 #include "Monsters.h"
 
-
-
-Monsters::Monsters() {
-    x = 0;
-    y = 0;
-    damage = 2;
-    is_alive = true;
-    health = 10;
-    srand(static_cast<unsigned int>(time(0))); // Инициализация генератора случайных чисел
-    name = names[rand() % names.size()];
-}
-
 std::vector<std::string> Monsters::names = { "Bob", "Dill", "Frank", "Sugarboy" };
 
-
-int Monsters::getX() const { return x; }
-int Monsters::getY() const { return y; }
-int Monsters::getDamage() const { return damage; }
-int Monsters::getHealth() { return health; }
-
-void Monsters::changeHealthValue(int value) {
-    health = value;
+Monsters::Monsters() {
+   
+    srand(static_cast<unsigned int>(time(0))); // Инициализация генератора случайных чисел
+    name = names[rand() % names.size()];
+    setHealth(10);
+    setDamage(5);
 }
-bool Monsters::isAlive() const { return is_alive; }
-// вывод характеристик монстра
-void Monsters::printMonster() {
-    std::cout << "Monster Name: " << name << std::endl;
-    printf("Monster Position: (%d, %d)\n", x, y);
-    printf("Damage: %d\n", damage);
-    printf("Health: %d\n", health);
-    printf("Is Alive: %s\n", is_alive ? "Yes" : "No");
-}
+
+
 
 void Monsters::move(int dx, int dy) {
-    x = dx;
-    y = dy;
+    setX(dx);
+    setY(dy);
 
 }
 
-void Monsters::changeX(int value)
+void Monsters::isDead()
 {
-    x = value;
+    Object::isDead();
+
+    is_alive = false;
+    move(-1, -1);
+    std::cout << name << " is dead!\n";
 }
 
-void Monsters::changeY(int value)
-{
-    y = value;
+
+Monsters& Monsters::operator=(Object& obj) {
+    if (this != &obj) {
+        // Копируем общие поля базового класса
+        setX(obj.getX());
+        setY(obj.getY());
+        setHealth(obj.getCurrentHealth());
+        setDamage(obj.getDamage());
+        this->name = obj.getName();
+    }
+    return *this;
 }
 
-void Monsters::is_dead() { is_alive = false; }
+// вывод характеристик монстра
+std::ostream& operator<<(std::ostream& os, Monsters& monster) {
+    os << static_cast<Object&>(monster);
 
+    printf("Health: %d\n", monster.getCurrentHealth());
+    printf("Is Alive: %s\n", monster.isAlive() ? "Yes" : "No");
+    return os;
+}

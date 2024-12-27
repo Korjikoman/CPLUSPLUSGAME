@@ -2,23 +2,18 @@
 
 int Potion::health_restore = 4;
 
-Potion::Potion() : x(0), y(0), collected(false) {}
+Potion::Potion() : Coordinates(0,0), collected(false) {}
 
 bool Potion::isCollected() const { return collected; }
 void Potion::collect() { collected = true; };
-int Potion::getX() const { return x; }
-int Potion::getY() const { return y; }
+int Potion::getX()  { return x; }
+int Potion::getY()  { return y; }
 int Potion::getHealthRestore() { return health_restore; }
 void Potion::setHealthRestore(int value)
 {
     health_restore = value;
 }
-void Potion::print_potion()
-{
-    printf("Potion Position: (%d, %d)\n", x, y);
-    printf("Health Restore: %d\n", health_restore);
-    printf("Collected: %s\n", collected ? "Yes" : "No");
-}
+
 void Potion::move(int dx, int dy) {
     x = dx;
     y = dy;
@@ -47,6 +42,14 @@ const Potion operator+(const Potion& potion1, const Potion& potion2) {
 
     // Возвращаем новый объект Potion
     return newPotion;
+}
+
+ostream& operator<<(ostream& os, Potion& potion)
+{
+    os << "Potion Position: (" << potion.x << ", " << potion.y << ")\n";
+    os << "Health Restore: " << potion.health_restore << "\n";
+    os << "Collected: " << (potion.collected ? "Yes" : "No") << "\n";
+    return os;
 }
 
 Potion& Potion::operator++() {

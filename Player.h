@@ -2,64 +2,51 @@
 #include "Inventory.h"
 #include "Potion.h"
 #include "Exceptions.h"
-
+#include "Object.h"
 #include <iostream>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-#include <cstdlib> // Для std::rand и std::srand
-#include <ctime> 
+#include <format>
 
 
 
-class Player // класс для представления игрока
+class Player: public Object // класс для представления игрока
 {
     friend void damagePlayer(Player& player, int damage);
 private:
-
-    int x, y;
-    std::string name;
-    int health;
-    static int maxHealth;
-    
-    
     int speed;
-    int damage;
     Inventory inventory;
-    int potions_count;
-
-    bool is_alive;
     int coins;
 
 public:
     // инициализация
     Player();
+    Player(std::string name, int x, int y, int health, int speedd, int damage);
     std::string getName();
-    
+    void heal();
     // перемещаем игрока
     Player& movePlayer(int dx, int dy);
 
     // проверяем, умер ли игрок
-    bool isAlive();
     Inventory getInventory();
 
     void add_coins(int value);
     int get_coins();
-    int& getX();
-    int& getY();
     int getspeed();
     void printPlayer();
-    int getDamage();
     void printCoordinates();
-    int getCurrentHealth();
+    
+    void isDead() override;
 
-    void changeHealthValue(int new_value);
 
-    void heal(int value);
-    void is_dead();
+    void addPotion(Potion& potion);
+
     void addItems(Item* item);
     int getItemsCount();
     Item* getItem(const std::string& itemName);
-    static void setMaxHealth(int value);
-    static int getMaxHealth();
+        
+    // перегрузка оператора присваивания
+    Player& operator=(Object& obj);
+    friend ostream& operator<<(ostream& os, Player& player);
+    
+
+
 };

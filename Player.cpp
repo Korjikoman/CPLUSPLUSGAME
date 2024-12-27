@@ -1,52 +1,59 @@
 #include "Player.h"
 
-int Player::maxHealth = 10;
 
-Player::Player()
+Player::Player() : Object(0, 0, 0, 0)
 {
     std::cout << "Initializing player...\n";
     std::cout << "Player's name (<= 100 characters): \n";
     name = safeString(100);
 
-    std::cout << "Coordinates of a player: (" << x << "; " << y <<")\n";
-
+    std::cout << "Coordinates of a player: (0;0)\n";
 
     std::cout << "Enter the initial health of the player ";
-    health = safeInt(1,10);
-
+    int init_health = safeInt(1,10);
+    changeHealthValue(init_health);
 
     std::cout << "Enter the speed of the player ";
-    speed= safeInt(1, 10);
+    speed = safeInt(1, 10);
 
     std::cout << "Enter the damage of the player ";
-    damage = safeInt(1, 2);
+    int init_damage = safeInt(1, 2);
+    setDamage(init_damage);
 
+   
 
-
-    potions_count = 0; // Инициализация по умолчанию
-    is_alive = true;   // Игрок жив при создании
     coins = 0;         // Начальное количество монет
 
     std::cout << "Player " << name << " initialized successfully!\n";
 }
 
+Player::Player(std::string name, int x, int y, int health, int speedd, int damage) : Object(x,y,health,damage)
+{
+    std::cout << "Initializing player...\n";
+    speed = 1;
+    coins = 0;
+    std::cout << "Player " << name << " initialized successfully!\n";
+}
+
 // перемещаем игрока
 Player& Player::movePlayer(int x, int y) {
-    this->x += x;
-    this->y += y;
-    printf("Player moved to (%d, %d)\n", this->x, this->y);
+    setX(getX() + x);
+    setY(getY() + y);
+    printf("Player moved to (%d, %d)\n", getX(), getY());
     return *this;
 }
 
 void Player::printCoordinates() {
-    std::cout << "Player is at (" << x << ", " << y << ")\n";
+    std::cout << "Player is at (" << getX() << ", " << getY() << ")\n";
+}
+
+void Player::addPotion(Potion& potion)
+{
+    inventory.inventoryAddPotion(&potion);
 }
 
 // проверяем, умер ли игрок
-bool Player::isAlive() {
-    return is_alive;
 
-}
 Inventory Player::getInventory() {
     return inventory;
 }
@@ -54,35 +61,8 @@ Inventory Player::getInventory() {
 
 void Player::add_coins(int value) { coins += value; }
 int Player::get_coins() { return coins; }
-int& Player::getX() { return x; }
-int& Player::getY() { return y; }
+
 int Player::getspeed() { return speed; }
-// выводим основные характеристики игрока
-void Player::printPlayer()
-{
-    printf("Player Position: (%d, %d)\n", x, y);
-    printf("Health: %d/%d\n", health, Player::maxHealth);
-    printf("Speed: %d\n", speed);
-    printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(), inventory.getItemsCount());
-    printf("Player coins: %d\n", coins);
-} // вывод игрока
-
-int Player::getCurrentHealth() {
-    return health;
-}
-
-// Меняем значение текущего здоровья игрока (например, при битве с монстром он теряет здоровье)
-void Player::changeHealthValue(int new_value) {
-    health = new_value;
-}
-
-void Player::heal(int value) {
-    health += value;
-}
-int Player::getDamage() { return damage; }
-
-void Player::is_dead() { is_alive = false; }
-
 
 void Player::addItems(Item* item)
 {
@@ -106,16 +86,58 @@ Item* Player::getItem(const std::string& itemName) {
     return nullptr;
 }
 
-
-void Player::setMaxHealth(int value) {
-    Player::maxHealth = value;
-}
-
-
-int Player::getMaxHealth() {
-    return maxHealth;
-}
-
 std::string Player::getName() {
     return name;
+}
+
+void Player::heal() {
+    if (inventory.getPotionsCount() > 0) {
+        changeHealthValue(4);
+        inventory.usePotion();
+        std::cout << "Player used a potion. Potions left: " << inventory.getPotionsCount() << "\n";
+    }
+    else {
+        std::cout << "No potions left to heal!\n";
+    }
+
+    /*Object::heal(10);*/
+}
+
+
+Player& Player::operator=(Object& obj) {
+    if (this != &obj) {
+        // Копируем общие поля базового класса
+        setX(obj.getX());
+        setY(obj.getY());
+        setHealth(obj.getCurrentHealth());
+        setDamage(obj.getDamage());
+        this->name = obj.getName(); 
+    }
+    return *this;
+}
+
+// выводим основные характеристики игрока
+std::ostream& operator<<(std::ostream& os, Player& player) {
+    
+    os << static_cast<Object&>(player);
+    os << "Speed: " << player.getspeed() << "\n";
+    os << "Inventory Space: " << player.getInventory().getSpace()
+        << ", Items Count: " << player.getInventory().getItemsCount() << "\n";
+    os << "Potions: " << player.getInventory().getPotionsCount() << "\n";
+    os << "Coins: " << player.get_coins() << "\n";
+    return os;
+    
+}
+
+
+void Player::isDead() {
+    
+    Object::isDead();
+
+    std::cout << "Player is dead\n";
+    is_alive = false;
+
+    std::cout << "Player earned " << coins << " coins\n";
+    std::cout << "Cleaning inventroy\n";
+    inventory.clearIventory();
 }

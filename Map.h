@@ -5,12 +5,13 @@
 #include "Player.h"
 #include "Gameplay.h"
 #include "Exceptions.h"
-
+#include "CollisionsChecker.h"
 
 #include <iostream>
-#include<cstdlib>
 #include <vector>
-
+#include <functional>
+#include <string>
+#include <memory>
 
 class Map
 {
@@ -61,7 +62,7 @@ public:
 	void moveObjectsRandomly();
 
 
-	Player getPlayer();
+	Player& getPlayer();
 
 	void movePlayer(int dx, int dy);
 	void addPlayer(Player& newPlayer);

@@ -6,24 +6,24 @@
 #include <string.h>
 #include <cstdlib> // Для std::rand и std::srand
 #include <ctime> 
+#include "Coordinates.h"
 
-class Coin // структура для представления монеток
+class Coin: public Coordinates // структура для представления монеток
 {
 private:
-    int x, y;
     int value;
     bool collected;
 public:
     Coin();
 
-    int getX() const;
-    int getY() const;
+    int getX();
+    int getY();
     int getValue() const;
-    void print_coin();
     bool is_collected();
     void collect_coin(Player& player, int value);
 
     void changeX(int value);
     void changeY(int value);
+    friend ostream& operator<<(ostream& os, Coin& coin);
 
 };

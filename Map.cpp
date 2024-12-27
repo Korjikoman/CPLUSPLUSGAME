@@ -25,59 +25,16 @@ Map::Map() {
     std::cout << "Map initialized successfully, objects added\n";
 }
 
-//void Map::addPlayer(Player& newPlayer)
-//{
-//    players.push_back(newPlayer); // Добавляем нового игрока в массив
-//    std::cout << "Player " << newPlayer.getName() << " added to the map." << std::endl;
-//}
-
-Player Map::getPlayer() {
+Player& Map::getPlayer() {
     return player;
 }
-//void Map::addMonster(Monsters monster) {
-//	if (monster_index < monsters_count) {
-//		monsters[monster_index + 1] = monster;
-//		std::cout << "Monster added successfully!\n";
-//	}
-//	else {
-//		std::cout << "Cannot add new monster, error!\n";
-//	}
-//}
-//void Map::addCoin(Coin coin) {
-//	if (monster_index < monsters_count) {
-//		monsters[monster_index + 1] = monster;
-//		std::cout << "Monster added successfully!\n";
-//	}
-//	else {
-//		std::cout << "Cannot add new monster, error!\n";
-//	}
-//}
-//void Map::addPotion(Potion potion) {
-//	if (monster_index < monsters_count) {
-//		monsters[monster_index + 1] = monster;
-//		std::cout << "Monster added successfully!\n";
-//	}
-//	else {
-//		std::cout << "Cannot add new monster, error!\n";
-//	}
-//}
-//
-//void Map::addItem(Item item) {
-//	if (item_index < items_count) {
-//		items[item_index + 1] = item;
-//		std::cout << "Item added successfully!\n";
-//	}
-//	else {
-//		std::cout << "Cannot add new item, error!\n";
-//	}
-//	}
-//}
+
 
 void Map::moveObjectsRandomly() {
 
 	for (int i = 0; i < monsters_count; i++) {
-		monsters[i].changeX(rand() % 50);
-		monsters[i].changeY(rand() % 50);
+		monsters[i].setX(rand() % 50);
+		monsters[i].setY(rand() % 50);
 	}
 
 	for (int i = 0; i < items_count; i++) {
@@ -94,6 +51,10 @@ void Map::moveObjectsRandomly() {
 		coins[i].changeX(rand() % 50);
 		coins[i].changeY(rand() % 50);
 	}
+    for (int i = 0; i < potions_count; i++) {
+        potions[i].changeX(rand() % 50);
+        potions[i].changeY(rand() % 50);
+    }
 }
 
 
@@ -113,73 +74,58 @@ void Map::movePlayer(int dx, int dy) {
 
 void Map::showInitializedClasses() {
     std::cout << "------------------Player:\n";
-    player.printPlayer();
+    std::cout << player << "\n";
     Inventory inventory = player.getInventory();
     std::cout << "------------------Player's inventory:\n";
-    inventory.print_inventory();
+    std::cout << inventory;
 
     std::cout << "------------------Monsters:\n";
     for (int i = 0; i < monsters_count; i++) {
-        monsters[i].printMonster();
+        std::cout << monsters[i];
     }
 
     std::cout << "------------------Items:\n";
     for (int i = 0; i < items_count; i++) {
-        items[i].print_item();
+        std::cout << items[i];
     }
     std::cout << "------------------Potions:\n";
     for (int i = 0; i < potions_count; i++) {
-        potions[i].print_potion();
+        std::cout << potions[i];
     }
 
     std::cout << "------------------Coins:\n";
     for (int i = 0; i < coins_count; i++) {
-        coins[i].print_coin();
+        std::cout << coins[i];
     }
 }
 
 
 void Map::checkCollisions() {
+    // Проверка столкновений с монстрами
+    CollisionsChecker<Monsters> monsterChecker(player, monsters, monsters_count, [](Player& player, Monsters& monster) {
+        std::cout << "Player encountered a monster!\n";
+        battle_with_monster(player, monster);
+    });
+    monsterChecker.checkCollisions();
 
+    // Проверка столкновений с зельями
+    CollisionsChecker<Potion> potionChecker(player, potions, potions_count, [](Player& player, Potion& potion) {
+        std::cout << "Player found a potion!\n";
+        player.heal();
+    });
+    potionChecker.checkCollisions();
 
-    // Проверяем столкновения с монстрами
-    for (int i = 0; i < monsters_count; i++) {
-        if (player.getX() == monsters[i].getX() && player.getY() == monsters[i].getY()) {
-            std::cout << "Player encountered a monster!\n";
+    // Проверка столкновений с монетами
+    CollisionsChecker<Coin> coinChecker(player, coins, coins_count, [](Player& player, Coin& coin) {
+        std::cout << "Player found a coin!\n";
+        player.add_coins(5);
+    });
+    coinChecker.checkCollisions();
 
-            battle_with_monster(player, monsters[i]);
-
-        }
-    }
-
-    // Проверяем столкновения с зельями
-    for (int i = 0; i < potions_count; i++) {
-        if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
-            std::cout << "Player found a potion!\n";
-            player.heal(potions[i].getHealthRestore());
-
-        }
-    }
-
-    // Проверяем столкновения с монетой
-    for (int i = 0; i < coins_count; i++) {
-        if (player.getX() == coins[i].getX() && player.getY() == coins[i].getY()) {
-            std::cout << "Player found a coin!\n";
-            player.add_coins(5);
-
-        }
-    }
-
-    // Проверяем столкновения с оружием
-    for (int i = 0; i < items_count; i++) {
-        if (player.getX() == items[i].getX() && player.getY() == items[i].getY()) {
-            std::cout << "Player found a " << items[i].getName() << "!\n";
-
-            player.addItems(&items[i]);
-            
-        }
-    }
-
-
+    // Проверка столкновений с оружием
+    CollisionsChecker<Item> itemChecker(player, items, items_count, [](Player& player, Item& item) {
+        std::cout << "Player found a " << item.getName() << "!\n";
+        player.addItems(&item);  // Add item to player (assuming this works correctly)
+    });
+    itemChecker.checkCollisions();
 }
-

@@ -6,14 +6,14 @@
 #include <cstdlib> // Для std::rand и std::srand
 #include <ctime> 
 #include <string>
+#include "Coordinates.h"
+using namespace std;
 
-
-class Item // класс для представления оружия
+class Item: public Coordinates // класс для представления оружия
 {
 
 private:
     std::string item_name;
-    int x, y;
     bool collected;
     int damage;
 
@@ -29,8 +29,8 @@ public:
     bool isCollected();
     void Collected();
 
-    // вывод характеристик оружия
-    void print_item();
+
+    friend ostream& operator<<(ostream& os, Item& item);
 
     void changeX(int value);
     void changeY(int value);

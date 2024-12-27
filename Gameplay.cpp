@@ -5,32 +5,33 @@
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
 void damagePlayer(Player& player, int damage) {
 
-    if (!player.is_alive) {
+    if (!player.isAlive()) {
         printf("Monster is dead and cannot attack.\n");
         return;
     }
 
-    player.health -= damage;
-    if (player.health <= 0) {
-        player.is_alive = false;
-        printf("Player is dead\n");
+    player.changeHealthValue(player.getCurrentHealth() - damage);
+    if (player.getCurrentHealth() <= 0) {
+        //player.isDead();
+        player.isDead_notVirtual();
     }
 }
 
-
 void damageMonster(Monsters& monster, int damage) {
-    monster.health -= damage;
-    if (monster.health <= 0)
+    monster.changeHealthValue(monster.getCurrentHealth() - damage);
+
+    if (monster.getCurrentHealth() <= 0)
     {
-        monster.health = 0;
-        monster.is_alive = false;
-        std::cout << "Monster defeated!\n";
+        //monster.isDead();
+        monster.isDead_notVirtual();
     }
 }
 
 // Функция, реализующая механику борьбы с монстром
 void battle_with_monster(Player& player, Monsters& monster)
 {
+   
+    
     if (!monster.isAlive()) {
         printf("The monster is already dead.\n");
         return;
@@ -44,7 +45,7 @@ void battle_with_monster(Player& player, Monsters& monster)
     // Проверка, если игрок уже мёртв
     if (player.getCurrentHealth() <= 0) {
         std::cout << "You were killed by the monster! Game over.\n" << std::endl;
-        player.is_dead();
+        player.isDead();
         return;
     }
 
@@ -78,11 +79,10 @@ void battle_with_monster(Player& player, Monsters& monster)
     while (monster.isAlive() && player.isAlive()) {
         // Игрок атакует монстра
         damageMonster(monster, player_damage);
-        std::cout << "You attacked the monster! Monster's health: " << monster.getHealth() << std::endl;
+        std::cout << "You attacked the monster! Monster's health: " << monster.getCurrentHealth() << std::endl;
 
         if (!monster.isAlive()) {
-            monster.changeX(-1);
-            monster.changeY(-1);
+            monster.isDead();
             break;
         }
 
@@ -91,7 +91,7 @@ void battle_with_monster(Player& player, Monsters& monster)
         std::cout << "The monster fought back! Your health: " << player.getCurrentHealth() << std::endl;
 
         if (player.getCurrentHealth() <= 0) {
-            player.is_dead();
+            player.isDead();
             break;
         }
     }
@@ -111,15 +111,6 @@ void battle_with_monster(Player& player, Monsters& monster)
 
 }
 
-// используем зелье для восстановления здоровья
-void use_potion(Player& player, Potion& potion) {
-    /*if (potion.isCollected() || potion.getHealthRestore() <= 0) return;
-
-    std::cout << "Player found a potion! Restoring " << potion.getHealthRestore() << " health." << std::endl;
-    player.health += potion.getHealthRestore();
-    potion.collect();*/
-}
-
 void changeSettings()
 {
     int choice;
@@ -135,8 +126,8 @@ void changeSettings()
         int health;
         std::cout << "Enter new health value:";
         std::cin >> health;
-        Player::setMaxHealth(health);
-        std::cout << "The player's new max health value is: " << Player::getMaxHealth() << "\n";
+        Object::setMaxHealth(health);
+        std::cout << "The player's new max health value is: " << Object::getMaxHealth() << "\n";
         break;
     
     case 2:
