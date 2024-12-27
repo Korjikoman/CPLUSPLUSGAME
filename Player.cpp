@@ -1,5 +1,5 @@
 #include "Player.h"
-
+#include <vector>
 
 Player::Player() : Object(0, 0, 0, 0)
 {
@@ -74,15 +74,24 @@ int Player::getItemsCount() {
 }
 
 Item* Player::getItem(const std::string& itemName) {
-    Item*** items = inventory.getInventoryItems();
-    for (int i = 0; i < Inventory::getSpace(); i++) {
-        for (int j = 0; j < Inventory::getSpace(); j++) {
-            std::cout << "Item [" << i + 1 << ";" << j+1 << "]" << items[i][j]->getName() << ", Damage: " << items[i][j]->getDamage() << std::endl;
-            if (items[i][j]->getName().find(itemName) != std::string::npos) return items[i][j];
-        }
 
+    auto& items = inventory.getInventoryItems();
+
+
+    for (auto& row : items) {
+        for (auto& slot : row) {
+            if (slot != nullptr) {
+             
+                std::cout << "Item: " << slot->getName() << ", Damage: " << slot->getDamage() << std::endl;
+
+                
+                if (slot->getName().find(itemName) != std::string::npos) {
+                    return slot;  
+                }
+            }
+        }
     }
- 
+
     return nullptr;
 }
 
@@ -139,5 +148,5 @@ void Player::isDead() {
 
     std::cout << "Player earned " << coins << " coins\n";
     std::cout << "Cleaning inventroy\n";
-    inventory.clearIventory();
+    inventory.clearInventory();
 }
