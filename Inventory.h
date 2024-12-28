@@ -45,7 +45,7 @@ public:
     void clearInventory();
     void inventoryAddItem(Item* item);
     void inventoryAddPotion(Potion* potion);
-    void usePotion();
+    int usePotion();
     int getPotionsCount();
 
 

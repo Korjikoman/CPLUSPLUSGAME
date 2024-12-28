@@ -6,7 +6,7 @@
 void damagePlayer(Player& player, int damage) {
 
     if (!player.isAlive()) {
-        printf("Monster is dead and cannot attack.\n");
+        printf("Player is dead and cannot attack.\n");
         return;
     }
 

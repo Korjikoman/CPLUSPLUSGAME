@@ -12,6 +12,7 @@ Object::Object() : Coordinates(0,0)
 Object::Object(int x, int y, int health, int damage) : Coordinates(x,y), health(health),
 damage(damage)
 {
+    is_alive = true;
     std::cout << "Object initiallated successfully!\n";
 }
 
@@ -75,7 +76,7 @@ int Object::getCurrentHealth()
 
 void Object::changeHealthValue(int new_value)
 {
-    health = new_value;
+    health += new_value;
 }
 
 int Object::getMaxHealth()

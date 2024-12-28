@@ -100,8 +100,10 @@ std::string Player::getName() {
 
 void Player::heal() {
     if (inventory.getPotionsCount() > 0) {
-        changeHealthValue(4);
-        inventory.usePotion();
+        int restore;
+        restore = inventory.usePotion();
+        changeHealthValue(restore);
+
         std::cout << "Player used a potion. Potions left: " << inventory.getPotionsCount() << "\n";
     }
     else {
@@ -133,6 +135,7 @@ std::ostream& operator<<(std::ostream& os, Player& player) {
         << ", Items Count: " << player.getInventory().getItemsCount() << "\n";
     os << "Potions: " << player.getInventory().getPotionsCount() << "\n";
     os << "Coins: " << player.get_coins() << "\n";
+    os << "Alive: " << player.isAlive() << "\n";
     return os;
     
 }

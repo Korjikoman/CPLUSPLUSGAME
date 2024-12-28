@@ -97,21 +97,26 @@ void Inventory::inventoryAddPotion(Potion* potion) {
     std::cout << "No space left for potions\n";
 }
 
-void Inventory::usePotion() {
+int Inventory::usePotion() {
     if (potions_count <= 0) {
         std::cout << "No potions left!\n";
-        return;
+        return 0;
     }
+
+    int restore = 0;
 
     // Используем последнее зелье
     inventory_potions[potions_count - 1]->changeX(-1);
     inventory_potions[potions_count - 1]->changeY(-1);
+    restore = inventory_potions[potions_count - 1]->getHealthRestore();
+
     inventory_potions[potions_count - 1] = nullptr;
 
     potions_count--;
     Sorting::sortItems(inventory_items);
 
     std::cout << "Potion used! Potions left: " << potions_count << "\n";
+    return restore;
 }
 
 int Inventory::getPotionsCount() {
