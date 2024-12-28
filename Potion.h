@@ -10,7 +10,7 @@ class Potion: public Coordinates // класс для представления зелий восстановления
 {
 
 private:
-    static int health_restore;
+    int health_restore;
     bool collected;
 public:
     Potion();
@@ -19,8 +19,8 @@ public:
     void collect();
     int getX() override;
     int getY() override;
-    static int getHealthRestore();
-    static void setHealthRestore(int value);
+     int getHealthRestore();
+     void setHealthRestore(int value);
 
 
     void move(int dx, int dy);

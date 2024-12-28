@@ -76,6 +76,7 @@ void Map::showInitializedClasses() {
     std::cout << "------------------Player:\n";
     std::cout << player << "\n";
     Inventory inventory = player.getInventory();
+    
     std::cout << "------------------Player's inventory:\n";
     std::cout << inventory;
 
@@ -111,7 +112,7 @@ void Map::checkCollisions() {
     // Проверка столкновений с зельями
     CollisionsChecker<Potion> potionChecker(player, potions, potions_count, [](Player& player, Potion& potion) {
         std::cout << "Player found a potion!\n";
-        player.heal();
+        player.addPotion(potion);
     });
     potionChecker.checkCollisions();
 

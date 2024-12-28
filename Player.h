@@ -5,7 +5,7 @@
 #include "Object.h"
 #include <iostream>
 #include <format>
-
+#include "Sorting.h"
 
 
 class Player: public Object // класс для представления игрока
@@ -15,7 +15,6 @@ private:
     int speed;
     Inventory inventory;
     int coins;
-
 public:
     // инициализация
     Player();
@@ -47,6 +46,5 @@ public:
     Player& operator=(Object& obj);
     friend ostream& operator<<(ostream& os, Player& player);
     
-
 
 };

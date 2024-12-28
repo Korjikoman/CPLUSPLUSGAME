@@ -118,7 +118,6 @@ void changeSettings()
     std::cout << "Select which setting you would like to change:\n";
     std::cout << "1) Player's maximum health\n";
     std::cout << "2) Maximum inventory space\n";
-    std::cout << "3) Amount of health restored by potions\n";
     std::cin >> choice;
     switch (choice)
     {
@@ -137,13 +136,7 @@ void changeSettings()
         Inventory::changeSpace(space);
         std::cout << "The new max inventory space value is: " << Inventory::getSpace() << "\n";
         break;
-    case 3:
-        int restore;
-        std::cout << "Enter new restored health value:";
-        std::cin >> restore;
-        Potion::setHealthRestore(restore);
-        std::cout << "The new value of the player's maximum health:" << Potion::getHealthRestore() << "\n";
-        break;
+ 
 
     default:
         break;

@@ -20,7 +20,6 @@ Player::Player() : Object(0, 0, 0, 0)
     int init_damage = safeInt(1, 2);
     setDamage(init_damage);
 
-   
 
     coins = 0;         // Начальное количество монет
 

@@ -1,18 +1,29 @@
 #include "Potion.h"
 
-int Potion::health_restore = 4;
 
-Potion::Potion() : Coordinates(0,0), collected(false) {}
+
+Potion::Potion() : Coordinates(0, 0), collected(false) {
+    // Инициализация health_restore случайным значением от 0 до 20
+    health_restore = std::rand() % 21; // % 21 дает диапазон от 0 до 20
+}
+
 
 bool Potion::isCollected() const { return collected; }
 void Potion::collect() { collected = true; };
 int Potion::getX()  { return x; }
 int Potion::getY()  { return y; }
-int Potion::getHealthRestore() { return health_restore; }
+
+int Potion::getHealthRestore()
+{
+    return health_restore;
+}
+
 void Potion::setHealthRestore(int value)
 {
     health_restore = value;
 }
+
+
 
 void Potion::move(int dx, int dy) {
     x = dx;

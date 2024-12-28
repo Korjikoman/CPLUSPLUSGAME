@@ -68,6 +68,7 @@ void Inventory::inventoryAddItem(Item* item) {
                 slot = item;
                 items_count++;
                 std::cout << "Item added\n";
+                Sorting::sortItems(inventory_items);
                 return;
             }
         }
@@ -88,6 +89,7 @@ void Inventory::inventoryAddPotion(Potion* potion) {
             inventory_potions[i] = potion;
             potions_count++;
             std::cout << "Potion added\n";
+            Sorting::sortPotions(inventory_potions);
             return;
         }
     }
@@ -107,6 +109,8 @@ void Inventory::usePotion() {
     inventory_potions[potions_count - 1] = nullptr;
 
     potions_count--;
+    Sorting::sortItems(inventory_items);
+
     std::cout << "Potion used! Potions left: " << potions_count << "\n";
 }
 
@@ -114,7 +118,9 @@ int Inventory::getPotionsCount() {
     return potions_count;
 }
 
-std::ostream& operator<<(std::ostream& os, Inventory& inventory) {
+
+
+std::ostream& operator<<(std::ostream& os, const Inventory& inventory) {
     os << "Inventory (in matrix form):\n";
 
     // Выводим предметы в инвентаре
@@ -134,7 +140,7 @@ std::ostream& operator<<(std::ostream& os, Inventory& inventory) {
     os << "Potions:\n";
     for (const auto& potion : inventory.inventory_potions) {
         if (potion != nullptr) {
-            os << "[Potion] ";
+            os << "[Potion_" << potion->getHealthRestore() <<"] ";
         }
         else {
             os << "[Empty] ";

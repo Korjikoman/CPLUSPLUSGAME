@@ -4,8 +4,11 @@
 #include "Potion.h"
 #include "Player.h"
 #include "Gameplay.h"
+#include "Gameplay.h"
+#include "Exceptions.h"
 #include "Exceptions.h"
 #include "CollisionsChecker.h"
+#include "Sorting.h"
 
 #include <iostream>
 #include <vector>

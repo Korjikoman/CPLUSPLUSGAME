@@ -1,14 +1,14 @@
 #pragma once
-#include "Item.h"
-#include "Potion.h"
+
+
+#include "Sorting.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <cstdlib> // Для std::rand и std::srand
+#include <cstdlib>
 #include <ctime> 
 
-#include <vector>
 #include <string>
 
 class Inventory {
@@ -20,7 +20,6 @@ private:
 
     std::vector<std::vector<Item*>> inventory_items;  // 2D контейнер для предметов
     std::vector<Potion*> inventory_potions;  // Вектор для зелий
-
 public:
 
     
@@ -33,8 +32,14 @@ public:
     int getRow();
     int getCol();
 
+    void findName();
+
+
     std::vector<std::vector<Item*>>& getInventoryItems() {
         return inventory_items;
+    }
+    std::vector<Potion*>& getInventoryPotions() {
+        return inventory_potions;
     }
 
     void clearInventory();
@@ -43,5 +48,6 @@ public:
     void usePotion();
     int getPotionsCount();
 
-    friend std::ostream& operator<<(std::ostream& os, Inventory& inventory);
+
+    friend std::ostream& operator<<(std::ostream& os, const Inventory& inventory);
 };

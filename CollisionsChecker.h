@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef COLLISIONSCHECKER_H
 #define COLLISIONSCHECKER_H
 
